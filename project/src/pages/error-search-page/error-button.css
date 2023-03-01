@@ -1,0 +1,28 @@
+.error-button {
+  padding: 10px;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+
+  color: white;
+  border: 4px solid #ff5635;
+  background-color: #ff5635;
+  border-radius: 8px;
+}
+
+.error-button:hover,
+.error-button:focus {
+  opacity: 0.8;
+}
+
+.error-button:focus {
+  outline: none;
+}
+
+.error-button:active {
+  outline: none;
+  opacity: 0.6;
+}
