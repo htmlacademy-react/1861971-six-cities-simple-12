@@ -1,8 +1,8 @@
 export enum Path {
-  MinePath = '/',
+  MainPath = '/',
   LoginPath = '/login',
   OfferPath = 'offer/',
-  Mistake = '*'
+  ErrorPath = '*'
 }
 
 export enum APIRoute {
@@ -13,7 +13,7 @@ export enum NameSpace {
   Offers = 'OFFERS',
 }
 
-export const cities: readonly string[] = [
+export const CITIES_NAME: readonly string[] = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -22,7 +22,7 @@ export const cities: readonly string[] = [
   'Dusseldorf'
 ];
 
-export const nameSort: readonly string[] = [
+export const SORT_NAME: readonly string[] = [
   'Popular',
   'Price: low to high',
   'Price: high to low',

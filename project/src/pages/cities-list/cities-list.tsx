@@ -1,22 +1,22 @@
 import { memo } from 'react';
 import { nanoid } from 'nanoid';
-import { cities } from '../../types/const/const';
+import { CITIES_NAME } from '../../types/const/const';
 
-type indicatorNameCity = {
-  valueCity: string;
+type CitiesListProps = {
+  cityName: string;
 }
 
-function ListCities ({valueCity}: indicatorNameCity): JSX.Element {
+function CitiesList ({cityName}: CitiesListProps): JSX.Element {
   return (
     <>
-      { cities.map((citie) =>
+      { CITIES_NAME.map((city) =>
         (
           <li key={nanoid(3)} className="locations__item">
-            <a className={citie === valueCity ?
+            <a className={city === cityName ?
               'locations__item-link tabs__item tabs__item--active' :
               'locations__item-link tabs__item'} href='#todo'
             >
-              <span>{citie}</span>
+              <span>{city}</span>
             </a>
           </li>
         )
@@ -25,4 +25,4 @@ function ListCities ({valueCity}: indicatorNameCity): JSX.Element {
   );
 }
 
-export default memo(ListCities);
+export default memo(CitiesList);

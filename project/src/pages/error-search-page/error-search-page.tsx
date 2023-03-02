@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Path } from '../../types/const/const';
 import './error.css';
@@ -8,14 +8,23 @@ function ErrorPage (): JSX.Element {
   const navigate = useNavigate();
 
   const closeError = () => {
-    setTimeout(() => navigate(Path.MinePath), 2000);
+    setTimeout(() => navigate(Path.MainPath), 2000);
   };
 
-  useEffect (() =>
-    closeError()
+  useEffect(() => {
+    let isMounted = true;
+
+    if(isMounted) {
+      closeError();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }
   );
 
-  return (
+  return(
     <div className="error">
       <p className="error-message">Page does not exist</p>
     </div>

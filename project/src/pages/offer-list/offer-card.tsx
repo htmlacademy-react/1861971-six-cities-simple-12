@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Offer, Path } from '../../types/const/const';
 
-type DataOffer = {
-  dataOffer: Offer;
+type OfferCardProps = {
+  offer: Offer;
 }
 
-function OfferCard ({dataOffer}: DataOffer): JSX.Element {
-  const {previewImage, title, price, type, isPremium, rating, id} = dataOffer;
+function OfferCard ({offer}: OfferCardProps): JSX.Element {
+  const {previewImage, title, price, type, isPremium, rating, id} = offer;
 
   const offerPath = `${Path.OfferPath}${id}`;
 

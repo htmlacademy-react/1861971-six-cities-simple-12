@@ -5,16 +5,16 @@ import ErrorPage from '../../pages/error-search-page/error-search-page';
 import { Path } from '../../types/const/const';
 
 function App(): JSX.Element {
-  const { MinePath, OfferPath, Mistake } = Path;
+  const { MainPath, OfferPath, ErrorPath } = Path;
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={MinePath} element={<MainPage/>}/>
+        <Route path={MainPath} element={<MainPage/>}/>
         <Route path={OfferPath}>
           <Route path=':id' element={<OfferPage/>}/>
         </Route>
-        <Route path={Mistake} element={<ErrorPage/>}/>
+        <Route path={ErrorPath} element={<ErrorPage/>}/>
       </Routes>
     </BrowserRouter>
   );
