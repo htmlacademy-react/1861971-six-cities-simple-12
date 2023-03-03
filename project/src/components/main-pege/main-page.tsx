@@ -21,7 +21,8 @@ function MainPage (): JSX.Element {
   const changeCityName = (evt: MouseEvent) => {
     setFilterStatus({
       ...filterStatus,
-      cityName: evt.target.textContent
+      cityName: evt.target.textContent,
+      sortType: 'Popular'
     });
   };
 
