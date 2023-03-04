@@ -1,47 +1,42 @@
 import { useState, MouseEvent } from 'react';
-import { useAppDispatch, useAppSelector } from './../../hooks/use-store/use-store';
+import { useAppSelector } from './../../hooks/use-store/use-store';
 import { fetchOfferList } from '../../store/api-actions/api-actions';
 import { offers } from '../../store/selectors/data-offers/selectors';
+import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
 import HeaderPage from '../../pages/header-page/header-page';
-import ListCities from '../../pages/list-cities/list-cities';
-import ThereIsRentalOffer from '../../pages/there-is-rental-offer/there-is-rental-offer';
+import CitiesList from '../../pages/cities-list/cities-list';
+import RentalOffer from '../../pages/rental-offer/rental-offer';
 import NoRentalOffers from '../../pages/no-rental-offers/no-rental-offers';
 import { sortOffersByCity, sortOffers } from '../../util/util';
 import { Offers } from '../../types/const/const';
 
 function MainPage (): JSX.Element {
-  const [ indicatorFetch, setIndicatorFetch ] = useState(false);
-  const [ indicatorFilter, setIndicatorFilter ] = useState({
-    nameCity: 'Paris',
-    nameSort: 'Popular',
+  const [ filterStatus, setFilterStatus ] = useState({
+    cityName: 'Paris',
+    sortType: 'Popular',
   });
-  const [ openSort, setOpenSort ] = useState(false);
-  const dispatch = useAppDispatch();
 
+  useRequestServer(fetchOfferList);
 
-  if(indicatorFetch === false) {
-    dispatch(fetchOfferList());
-    setIndicatorFetch(true);
-  }
-
-  const changeNameCity = (evt: MouseEvent) => {
-    setIndicatorFilter({
-      ...indicatorFilter,
-      nameCity: evt.target.textContent
+  const changeCityName = (evt: MouseEvent) => {
+    setFilterStatus({
+      ...filterStatus,
+      cityName: evt.target.textContent,
+      sortType: 'Popular'
     });
   };
 
   const changeSort = (evt: MouseEvent) => {
-    setIndicatorFilter({
-      ...indicatorFilter,
-      nameSort: evt.target.textContent
+    setFilterStatus({
+      ...filterStatus,
+      sortType: evt.target.textContent
     });
   };
 
-  const offerList = useAppSelector(offers);
+  const offersList = useAppSelector(offers);
 
-  const offerSortCity: Offers = sortOffersByCity(offerList, indicatorFilter.nameCity);
-  const offerSortFilter: Offers = sortOffers(indicatorFilter.nameSort, offerSortCity);
+  const offerSortCity: Offers = sortOffersByCity(offersList, filterStatus.cityName);
+  const offerSortFilter: Offers = sortOffers(filterStatus.sortType, offerSortCity);
 
   return (
     <div className="page page--gray page--main">
@@ -64,19 +59,17 @@ function MainPage (): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list" onMouseDown={changeNameCity}>
-              <ListCities valueCity={indicatorFilter.nameCity}/>
+            <ul className="locations__list tabs__list" onMouseDown={changeCityName}>
+              <CitiesList cityName={filterStatus.cityName}/>
             </ul>
           </section>
         </div>
         <div className="cities">
           { offerSortFilter.length !== 0 ?
-            <ThereIsRentalOffer
-              dataOffers={offerSortFilter}
-              filterName={indicatorFilter}
-              changeSortHandler={changeSort}
-              openSortIndicator={openSort}
-              setOpenSortHandler={setOpenSort}
+            <RentalOffer
+              offers={offerSortFilter}
+              filterName={filterStatus}
+              onChangeSort={changeSort}
             /> :
             <NoRentalOffers/>}
         </div>

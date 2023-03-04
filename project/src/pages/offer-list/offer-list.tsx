@@ -2,18 +2,18 @@ import OfferCard from './offer-card';
 import { Offers } from '../../types/const/const';
 
 
-type DataOfferList = {
-  dataOffers: Offers;
+type OfferListProps = {
+  offersData: Offers;
 }
 
-function OfferList({dataOffers}: DataOfferList): JSX.Element {
+function OfferList({offersData}: OfferListProps): JSX.Element {
 
-  const newOfferList: Offers = dataOffers.slice(0, 5);
+  const newOfferList: Offers = offersData.slice(0, 5);
 
   return (
     <>
       {newOfferList.map((list) => (
-        <OfferCard key={list.id.toString()} dataOffer={list}/>
+        <OfferCard key={list.id.toString()} offer={list}/>
       ))}
     </>
   );

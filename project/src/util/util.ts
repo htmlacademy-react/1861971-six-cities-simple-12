@@ -1,22 +1,22 @@
 import { Offers } from '../types/const/const';
 import { Offer } from '../types/const/const';
-import { nameSort } from '../types/const/const';
+import { SORT_NAME } from '../types/const/const';
 
-export const sortOffersByCity = (dataOffers:Offers, cityIndicator:string):Offers =>
-  dataOffers.filter(
-    (offer: Offer) => offer.city.name === cityIndicator
+export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
+  offers.filter(
+    (offer: Offer) => offer.city.name === cityName
   );
 
-export const sortOffers = (indicatorSort:string, dataOffers:Offers) => {
-  const [Popular, Tall, Short, Top] = nameSort;
+export const sortOffers = (sortType:string, offers:Offers) => {
+  const [Popular, Tall, Short, Top] = SORT_NAME;
   let sortResult: Offers = [];
 
-  switch (indicatorSort) {
+  switch (sortType) {
     case Popular:
-      sortResult = dataOffers;
+      sortResult = offers;
       break;
     case Short:
-      sortResult = dataOffers.slice ().sort ((a,b) => {
+      sortResult = offers.slice ().sort ((a,b) => {
         if (a.price < b.price) {
           return -1;
         }
@@ -27,7 +27,7 @@ export const sortOffers = (indicatorSort:string, dataOffers:Offers) => {
       });
       break;
     case Tall:
-      sortResult = dataOffers.slice ().sort ((a,b) => {
+      sortResult = offers.slice ().sort ((a,b) => {
         if (a.price < b.price) {
           return -1;
         }
@@ -38,7 +38,7 @@ export const sortOffers = (indicatorSort:string, dataOffers:Offers) => {
       }).reverse();
       break;
     case Top:
-      sortResult = dataOffers.slice ().sort ((a,b) => {
+      sortResult = offers.slice ().sort ((a,b) => {
         if (a.rating < b.rating) {
           return -1;
         }
