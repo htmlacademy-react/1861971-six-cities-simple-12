@@ -1,25 +1,23 @@
 import { useEffect } from 'react';
-import { AxiosInstance } from 'axios';
-import { AsyncThunk } from '@reduxjs/toolkit';
 import { useAppDispatch } from '../use-store/use-store';
-import { Offers } from '../../types/const/const';
 
-
-export function useRequestServer (fetch: AsyncThunk<Offers, undefined, {
-  extra: AxiosInstance;
-}>) {
+export function useRequestServer <A,B> (fetch: A, payload?: B) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if(!fetch) {
+      return;
+    }
+
     let isMounted = true;
 
     if(isMounted){
-      dispatch(fetch());
+      dispatch(fetch(payload && payload));
     }
 
     return () => {
       isMounted = false;
     };
-  },[fetch,dispatch]);
+  },[fetch,dispatch,payload]);
 
 }

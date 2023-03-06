@@ -7,10 +7,22 @@ export enum Path {
 
 export enum APIRoute {
   OfferList = '/hotels',
+  OfferNear = 'nearby',
+  Comments = '/comments'
 }
 
 export enum NameSpace {
   Offers = 'OFFERS',
+  Offer = 'OFFER',
+  OffersNear = 'OFFERS_NEAR',
+  Comments = 'COMMENTS'
+}
+
+export enum TypeHousing {
+  Apartment = 'Apartment',
+  Room = 'Private Room',
+  House = 'House',
+  Hotel = 'Hotel'
 }
 
 export const CITIES_NAME: readonly string[] = [
@@ -64,3 +76,18 @@ type: string;
 }
 
 export type Offers = Offer[];
+
+export type Comment = {
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
+  user: {
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
+  };
+}
+
+export type Comments = Comment[];

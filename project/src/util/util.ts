@@ -1,6 +1,4 @@
-import { Offers } from '../types/const/const';
-import { Offer } from '../types/const/const';
-import { SORT_NAME } from '../types/const/const';
+import { SORT_NAME, Offer, Offers, TypeHousing } from '../types/const/const';
 
 export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
   offers.filter(
@@ -52,3 +50,32 @@ export const sortOffers = (sortType:string, offers:Offers) => {
   return sortResult;
 };
 
+export const returnTypeHousing = ( typeHousing: string ) => {
+  const { Apartment, Room, House, Hotel } = TypeHousing;
+
+  switch (typeHousing) {
+    case 'apartment':
+      return Apartment;
+    case 'room':
+      return Room;
+    case 'house':
+      return House;
+    case 'hotel':
+      return Hotel;
+    default:
+      return '';
+  }
+};
+
+export const returnNewOffers = (offersData: Offers | undefined, dataOffersNear: Offers | null): Offers => {
+  let newOffers: Offers = [];
+
+  if(offersData) {
+    newOffers = offersData.slice(0, 5);
+  }
+
+  if(dataOffersNear) {
+    newOffers = dataOffersNear.slice(0, 3);
+  }
+  return newOffers;
+};

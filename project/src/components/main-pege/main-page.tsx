@@ -1,3 +1,5 @@
+import { AxiosInstance } from 'axios';
+import { AsyncThunk } from '@reduxjs/toolkit';
 import { useState, MouseEvent } from 'react';
 import { useAppSelector } from './../../hooks/use-store/use-store';
 import { fetchOfferList } from '../../store/api-actions/api-actions';
@@ -10,13 +12,17 @@ import NoRentalOffers from '../../pages/no-rental-offers/no-rental-offers';
 import { sortOffersByCity, sortOffers } from '../../util/util';
 import { Offers } from '../../types/const/const';
 
+type FetchOfferList = AsyncThunk<Offers, undefined, {
+  extra: AxiosInstance;
+}>;
+
 function MainPage (): JSX.Element {
   const [ filterStatus, setFilterStatus ] = useState({
     cityName: 'Paris',
     sortType: 'Popular',
   });
 
-  useRequestServer(fetchOfferList);
+  useRequestServer<FetchOfferList, null>(fetchOfferList);
 
   const changeCityName = (evt: MouseEvent) => {
     setFilterStatus({
@@ -71,7 +77,7 @@ function MainPage (): JSX.Element {
               filterName={filterStatus}
               onChangeSort={changeSort}
             /> :
-            <NoRentalOffers/>}
+            <NoRentalOffers city={filterStatus.cityName}/>}
         </div>
       </main>
     </div>
