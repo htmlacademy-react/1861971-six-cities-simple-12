@@ -1,7 +1,11 @@
 import { useAppSelector } from '../../hooks/use-store/use-store';
 import { loading } from '../../store/selectors/data-offers/selectors';
 
-function NoRentalOffers (): JSX.Element {
+type NoRentalOffersProps = {
+  city: string;
+}
+
+function NoRentalOffers ({city}: NoRentalOffersProps): JSX.Element {
   const loadValue: boolean = useAppSelector(loading);
 
   return (
@@ -11,9 +15,9 @@ function NoRentalOffers (): JSX.Element {
           {!loadValue &&
           <>
             <b className="cities__status">No places to stay available</b>
-            <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+            <p className="cities__status-description">We could not find any property available at the moment in {city}</p>
           </>}
-          {loadValue && <b className="cities__status">Loading offers</b>}
+          {loadValue && <b className="cities__status">...Loading offers. Please wait.</b>}
         </div>
       </section>
       <div
