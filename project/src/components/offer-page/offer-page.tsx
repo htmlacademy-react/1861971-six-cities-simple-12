@@ -1,12 +1,7 @@
-import { AxiosInstance } from 'axios';
-import { AsyncThunk } from '@reduxjs/toolkit';
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/use-store/use-store';
-import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
-import { fetchOffer } from '../../store/api-actions/api-actions';
 import { fetchOffersNear } from '../../store/api-actions/api-actions';
-import { offer } from '../../store/selectors/data-offer/selectors';
-import { Offer } from '../../types/const/const';
+import { auth } from '../../store/selectors/data-authorization/selectors';
+import { useAppSelector } from '../../hooks/use-store/use-store';
+import { Offer, AuthorizationStatus } from '../../types/const/const';
 import HeaderPage from '../../pages/header-page/header-page';
 import HeaderImage from '../../pages/header-image/header-image';
 import HouseholdThingsList from '../../pages/household-things-list/household-things-list';
@@ -14,25 +9,19 @@ import PropertyFeatures from '../../pages/property-features/property-features';
 import HostInformation from '../../pages/host-information/host-information';
 import OfferList from '../../pages/offer-list/offer-list';
 import ReviewsList from '../../pages/reviews-list/reviews-list';
+import FormReview from '../../pages/form-review/form-review';
 
-type FetchOffer = AsyncThunk<Offer, number, {
-  extra: AxiosInstance;
-}>;
+type OfferPageProps = {
+  dataOffer: Offer;
+}
 
-function OfferPage (): JSX.Element {
-  const hotelId = useParams();
-
-  useRequestServer<FetchOffer, number>(fetchOffer, Number(hotelId.id));
-  const dataOffer = useAppSelector(offer);
-
-  if(!dataOffer) {
-    return;
-  }
+function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
+  const authorizationStatus = useAppSelector(auth);
 
   const {isPremium, title, description, type, bedrooms, maxAdults, rating, price, host, id} = dataOffer;
 
   return (
-    <div className="page">
+    <>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -93,52 +82,7 @@ function OfferPage (): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList hotelId={id}/>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
+                {authorizationStatus === AuthorizationStatus.Auth && <FormReview hotelId={id}/>}
               </section>
             </div>
           </div>
@@ -153,7 +97,7 @@ function OfferPage (): JSX.Element {
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

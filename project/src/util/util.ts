@@ -79,3 +79,40 @@ export const returnNewOffers = (offersData: Offers | undefined, dataOffersNear: 
   }
   return newOffers;
 };
+
+export const changeValidatStar = <A, B>(cb: A, validate: B, valueStar: string) => {
+  if(valueStar.length !== 0) {
+    cb({
+      ...validate,
+      validatStar: true
+    });
+  }
+};
+
+export const changeValidatText = <A, B>(cb: A, validate: B, valueText: string) => {
+  if(valueText.length >= 50 && valueText.length < 300) {
+    cb({
+      ...validate,
+      validatText: true
+    });
+  } else {
+    cb({
+      ...validate,
+      validatText: false
+    });
+  }
+};
+
+export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName: string) => {
+  if(value.length !== 1) {
+    cb({
+      ...validate,
+      [fieldName]: true
+    });
+  } else {
+    cb({
+      ...validate,
+      [fieldName]: false
+    });
+  }
+};

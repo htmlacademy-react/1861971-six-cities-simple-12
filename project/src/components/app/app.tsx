@@ -1,18 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from '../main-pege/main-page';
-import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../../pages/error-search-page/error-search-page';
+import LoadOffer from '../../pages/load-offer/load-offer';
+import LoginPage from '../login-page/login-page';
 import { Path } from '../../types/const/const';
 
 function App(): JSX.Element {
-  const { MainPath, OfferPath, ErrorPath } = Path;
+  const { MainPath, LoginPath, OfferPath, ErrorPath } = Path;
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path={MainPath} element={<MainPage/>}/>
+        <Route path={LoginPath} element={<LoginPage/>}/>
         <Route path={OfferPath}>
-          <Route path=':id' element={<OfferPage/>}/>
+          <Route path=':id' element={<LoadOffer/>}/>
         </Route>
         <Route path={ErrorPath} element={<ErrorPage/>}/>
       </Routes>

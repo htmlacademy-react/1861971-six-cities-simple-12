@@ -1,6 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { Offers, Offer, Comments, APIRoute } from '../../types/const/const';
+import { Dispatch } from '../../types/reducer/reducer';
+import { saveToken } from '../../services/save-token/save-token';
+import { changeAuthorizationStatus } from '../reducer/get-authorization/get-authorization';
+import {
+  Offers,
+  Offer,
+  Comments,
+  APIRoute,
+  Authorization,
+  DataUser,
+  UserComment
+} from '../../types/const/const';
 
 export const fetchOfferList = createAsyncThunk<Offers, undefined, {
   extra: AxiosInstance;
@@ -38,6 +49,39 @@ export const fetchComments = createAsyncThunk<Comments, number, {
   'data/fetchComments',
   async (hotelId: number, {extra: api}) => {
     const {data} = await api.get<Comments>(`${APIRoute.Comments}/${hotelId}`);
+    return data;
+  },
+);
+
+export const authorizationOnServer = createAsyncThunk<Authorization, DataUser, {
+  extra: AxiosInstance;
+}>(
+  'user/authorizationOnServer',
+  async ({email, password}, {extra: api}) => {
+    const {data} = await api.post<Authorization>(APIRoute.Login, {email, password});
+    const tokenUser = data.token;
+    saveToken(tokenUser);
+    return data;
+  },
+);
+
+export const checkAuthorizationUser = createAsyncThunk<void, undefined, {
+  dispatch: Dispatch;
+  extra: AxiosInstance;
+}>(
+  'user/checkAuthorization',
+  async (_arg, {dispatch ,extra: api}) => {
+    const {data} = await api.get<Authorization>(APIRoute.Login);
+    dispatch(changeAuthorizationStatus(data));
+  },
+);
+
+export const postCommentOnServer = createAsyncThunk<Comments, UserComment, {
+  extra: AxiosInstance;
+}>(
+  'user/postCommentOnServer',
+  async ({comment, rating, id}, {extra: api}) => {
+    const {data} = await api.post<Comments>(`${APIRoute.Comments}/${id}`, {comment, rating});
     return data;
   },
 );
