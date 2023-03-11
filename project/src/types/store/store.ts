@@ -1,5 +1,5 @@
 import { store } from '../../store/store/store';
-import { Offers, Offer, Comments } from '../const/const';
+import { Offers, Offer, Comments, Authorization } from '../const/const';
 
 export type DataOffers = {
   offerList: Offers;
@@ -8,6 +8,7 @@ export type DataOffers = {
 
 export type DataOffer = {
 offer: Offer | null;
+typeDownload: string;
 };
 
 export type DataOffersNear = {
@@ -18,6 +19,11 @@ export type DataOffersNear = {
 export type DataComments = {
   comments: Comments;
   loading: boolean;
+};
+
+export type AuthorizationType = {
+  authorizationStatus: string;
+  dataUser: Authorization | null;
 };
 
 export type State = ReturnType<typeof store.getState>;

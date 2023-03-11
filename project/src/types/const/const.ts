@@ -8,14 +8,16 @@ export enum Path {
 export enum APIRoute {
   OfferList = '/hotels',
   OfferNear = 'nearby',
-  Comments = '/comments'
+  Comments = '/comments',
+  Login = '/login'
 }
 
 export enum NameSpace {
   Offers = 'OFFERS',
   Offer = 'OFFER',
   OffersNear = 'OFFERS_NEAR',
-  Comments = 'COMMENTS'
+  Comments = 'COMMENTS',
+  Authorization = 'AUTHORIZATION'
 }
 
 export enum TypeHousing {
@@ -23,6 +25,18 @@ export enum TypeHousing {
   Room = 'Private Room',
   House = 'House',
   Hotel = 'Hotel'
+}
+
+export enum TypeDownload {
+  Fulfilled = 'fulfilled',
+  Rejected = 'rejected',
+  Pendin = 'pendin'
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export const CITIES_NAME: readonly string[] = [
@@ -39,6 +53,14 @@ export const SORT_NAME: readonly string[] = [
   'Price: low to high',
   'Price: high to low',
   'Top rated first'
+];
+
+export const TITLES: readonly string[] = [
+  'perfect',
+  'good',
+  'not bad',
+  'badly',
+  'terribly'
 ];
 
 export type Offer = {
@@ -91,3 +113,23 @@ export type Comment = {
 }
 
 export type Comments = Comment[];
+
+export type Authorization = {
+  avatarUrl: string;
+  email: string;
+  id: number;
+  isPro: boolean;
+  name: string;
+  token: string;
+  }
+
+export type DataUser = {
+    email: string;
+    password: string;
+}
+
+export type UserComment = {
+  comment: string;
+  rating: number;
+  id: number;
+  }
