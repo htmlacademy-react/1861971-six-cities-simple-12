@@ -104,7 +104,7 @@ export const changeValidatText = <A, B>(cb: A, validate: B, valueText: string) =
 };
 
 export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName: string) => {
-  if(value.length !== 1) {
+  if(value.length !== 1 && value.length !== 0) {
     cb({
       ...validate,
       [fieldName]: true

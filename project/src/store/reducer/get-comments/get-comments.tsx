@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchComments } from '../../api-actions/api-actions';
 import { DataComments } from '../../../types/store/store';
-import { NameSpace } from '../../../types/const/const';
+import { NameSpace, Comments } from '../../../types/const/const';
 
 const initialState: DataComments = {
   comments: [],
@@ -11,7 +11,11 @@ const initialState: DataComments = {
 export const getComments = createSlice({
   name: NameSpace.Comments,
   initialState,
-  reducers: {},
+  reducers: {
+    addComments: (state, action: PayloadAction<Comments>) => {
+      state.comments = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchComments.pending, (state) => {
@@ -26,3 +30,5 @@ export const getComments = createSlice({
       });
   }
 });
+
+export const {addComments} = getComments.actions;

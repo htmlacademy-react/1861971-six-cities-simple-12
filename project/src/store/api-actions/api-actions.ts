@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { Dispatch } from '../../types/reducer/reducer';
 import { saveToken } from '../../services/save-token/save-token';
 import { changeAuthorizationStatus } from '../reducer/get-authorization/get-authorization';
+import { addComments } from '../reducer/get-comments/get-comments';
 import {
   Offers,
   Offer,
@@ -76,12 +77,13 @@ export const checkAuthorizationUser = createAsyncThunk<void, undefined, {
   },
 );
 
-export const postCommentOnServer = createAsyncThunk<Comments, UserComment, {
+export const postCommentOnServer = createAsyncThunk<void, UserComment, {
+  dispatch: Dispatch;
   extra: AxiosInstance;
 }>(
   'user/postCommentOnServer',
-  async ({comment, rating, id}, {extra: api}) => {
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
     const {data} = await api.post<Comments>(`${APIRoute.Comments}/${id}`, {comment, rating});
-    return data;
+    dispatch(addComments(data));
   },
 );

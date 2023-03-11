@@ -4,7 +4,6 @@ import { getOffer } from '../reducer/get-offer/get-offer';
 import { getOffersNear } from '../reducer/get-offers-near/get-offers-near';
 import { getComments } from '../reducer/get-comments/get-comments';
 import { getAuthorization } from '../reducer/get-authorization/get-authorization';
-import { addUserComment } from '../reducer/add-user-comment/add-user-comment';
 import { NameSpace } from '../../types/const/const';
 
 export const rootReducer = combineReducers ({
@@ -13,5 +12,4 @@ export const rootReducer = combineReducers ({
   [NameSpace.OffersNear]: getOffersNear.reducer,
   [NameSpace.Comments]: getComments.reducer,
   [NameSpace.Authorization]: getAuthorization.reducer,
-  [NameSpace.AddComments]: addUserComment.reducer
 });

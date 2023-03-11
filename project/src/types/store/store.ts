@@ -26,11 +26,4 @@ export type AuthorizationType = {
   dataUser: Authorization | null;
 };
 
-export type AddUserComment = {
-  loading: {
-    type: string;
-    status: boolean;
-  };
-}
-
 export type State = ReturnType<typeof store.getState>;
