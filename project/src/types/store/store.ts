@@ -26,4 +26,8 @@ export type AuthorizationType = {
   dataUser: Authorization | null;
 };
 
+export type OfferList = {
+  offerList: Offers;
+}
+
 export type State = ReturnType<typeof store.getState>;

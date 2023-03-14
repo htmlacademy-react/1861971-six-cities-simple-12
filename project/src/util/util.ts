@@ -1,3 +1,4 @@
+import leaflet from 'leaflet';
 import { SORT_NAME, Offer, Offers, TypeHousing } from '../types/const/const';
 
 export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
@@ -115,4 +116,31 @@ export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName
       [fieldName]: false
     });
   }
+};
+
+export const createMarker = (offer: Offer, indexPlase: number | undefined): leaflet.Marker => {
+  const {location:{latitude,longitude}, id} = offer;
+
+  const defaultIcon = leaflet.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const activeIcon = leaflet.icon({
+    iconUrl: 'img/pin-active.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  return leaflet
+    .marker({
+      lat: latitude,
+      lng: longitude,
+    }, {
+      icon: (id === indexPlase)
+        ? activeIcon
+        : defaultIcon
+    });
+
 };
