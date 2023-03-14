@@ -11,7 +11,7 @@ function ErrorPage (): JSX.Element {
     setTimeout(() => navigate(Path.MainPath), 2000);
   };
 
-  useEffect(() => {
+  useEffect (() => {
     let isMounted = true;
 
     if(isMounted) {
@@ -24,7 +24,7 @@ function ErrorPage (): JSX.Element {
   }
   );
 
-  return(
+  return (
     <div className="error">
       <p className="error-message">Page does not exist</p>
     </div>

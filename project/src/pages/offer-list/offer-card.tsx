@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Offer, Path } from '../../types/const/const';
 
+type ChangeNameCity = (index: number) => void;
+
 type OfferCardProps = {
   offer: Offer;
+  onChangeNameCity?: ChangeNameCity;
 }
 
-function OfferCard ({offer}: OfferCardProps): JSX.Element {
+function OfferCard ({offer, onChangeNameCity}: OfferCardProps): JSX.Element {
   const {previewImage, title, price, type, isPremium, rating, id} = offer;
 
   const offerPath = `${Path.OfferPath}${id}`;
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={() => onChangeNameCity(id)}>
       {
         isPremium &&
       <div className="place-card__mark">
