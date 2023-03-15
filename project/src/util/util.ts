@@ -118,8 +118,7 @@ export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName
   }
 };
 
-export const createMarker = (offer: Offer, indexPlase: number | undefined): leaflet.Marker => {
-  const {location:{latitude,longitude}, id} = offer;
+export const createMarker = (offers: Offers, indexPlase: number | undefined): leaflet.Marker[] => {
 
   const defaultIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -133,14 +132,19 @@ export const createMarker = (offer: Offer, indexPlase: number | undefined): leaf
     iconAnchor: [20, 40],
   });
 
-  return leaflet
-    .marker({
-      lat: latitude,
-      lng: longitude,
-    }, {
-      icon: (id === indexPlase)
-        ? activeIcon
-        : defaultIcon
-    });
+  const markers = offers.map((offer) => {
+    const { location:{latitude, longitude}, id } = offer;
 
+    return leaflet
+      .marker({
+        lat: latitude,
+        lng: longitude,
+      }, {
+        icon: (id === indexPlase)
+          ? activeIcon
+          : defaultIcon
+      });
+  });
+
+  return markers;
 };

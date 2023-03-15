@@ -89,7 +89,7 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map sizeMap={SIZE_MAP} indexPlase={id} />
+          <Map sizeMap={SIZE_MAP} indexPlase={id} offer={dataOffer}/>
         </section>
         <div className="container">
           <section className="near-places places">

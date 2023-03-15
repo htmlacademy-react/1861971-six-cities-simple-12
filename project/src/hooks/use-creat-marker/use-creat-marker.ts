@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { layerGroup } from 'leaflet';
-import { Map } from 'leaflet';
+import { useEffect, useState, useRef } from 'react';
+import { featureGroup } from 'leaflet';
+import { Map, FeatureGroup } from 'leaflet';
 import { createMarker } from '../../util/util';
-import { Offers, Offer } from '../../types/const/const';
+import { Offers } from '../../types/const/const';
 
 function useCreatMarker (map: Map | null,
   offerList: Offers,
@@ -11,31 +11,35 @@ function useCreatMarker (map: Map | null,
 
   const [ namePlase, setNamePlase ] = useState({
     valuePlase: '',
-    valueSort: ''
+    valueSort: 'Popular'
   });
+
+  const groupLayer = useRef<FeatureGroup | null>(null);
+
 
   useEffect(() => {
     if(!map || offerList.length === 0) {
       return;
     }
 
-    const markerGroup = layerGroup().addTo(map);
     const [ place ] = offerList;
 
-    if (namePlase.valueSort !== nameSort && nameSort !== undefined) {
-      markerGroup.clearLayers();
-      setNamePlase({
+
+    if ((namePlase.valueSort !== nameSort || place.city.name !== namePlase.valuePlase) && nameSort !== undefined) {
+      groupLayer.current?.clearLayers();
+      groupLayer.current = null;
+      if(nameSort) {setNamePlase({
         ...namePlase,
         valueSort: nameSort
       });
+      }
     }
 
-    if (place.city.name !== namePlase.valuePlase) {
 
-      offerList.forEach((offer: Offer) => {
-        createMarker(offer, indexPlase)
-          .addTo(markerGroup);
-      });
+    if (place.city.name !== namePlase.valuePlase) {
+      const markers = featureGroup(createMarker(offerList, indexPlase));
+      groupLayer.current = markers;
+      groupLayer.current?.addTo(map);
 
       setNamePlase({
         ...namePlase,
@@ -43,13 +47,16 @@ function useCreatMarker (map: Map | null,
       });
     }
 
-    if (place.city.name === namePlase.valuePlase) {
 
-      offerList.forEach((offer: Offer) => {
-        createMarker(offer, indexPlase)
-          .addTo(markerGroup);
-      });
+    if (place.city.name === namePlase.valuePlase) {
+      groupLayer.current?.clearLayers();
+      groupLayer.current = null;
+      const markers = featureGroup(createMarker(offerList, indexPlase));
+      groupLayer.current = markers;
+      groupLayer.current?.addTo(map);
+
     }
+
 
   }, [map, offerList, indexPlase, namePlase, nameSort]);
 
