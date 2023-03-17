@@ -76,6 +76,7 @@ function MainPage (): JSX.Element {
               offers={offerSortFilter}
               filterName={filterStatus}
               onChangeSort={changeSort}
+              nameSort={filterStatus.sortType}
             /> :
             <NoRentalOffers city={filterStatus.cityName}/>}
         </div>

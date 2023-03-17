@@ -1,6 +1,7 @@
 import { MouseEvent, useState } from 'react';
 import OfferList from '../offer-list/offer-list';
 import SortList from '../sort-list/sort-list';
+import Map from '../map/map';
 import { Offers } from '../../types/const/const';
 
 type filterType = {
@@ -14,10 +15,18 @@ type RentalOfferProps = {
   offers: Offers;
   filterName: filterType;
   onChangeSort: changeSort;
+  nameSort: string;
 }
 
-function RentalOffer ({offers, filterName, onChangeSort}: RentalOfferProps): JSX.Element {
+function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferProps): JSX.Element {
   const [ openSort, setOpenSort ] = useState(false);
+  const [ namePlase, setNamePlase ] = useState(0);
+
+  const changeNamePlase = (index: number) => {
+    setNamePlase(index);
+  };
+
+  const SIZE_MAP = '682px';
 
   return (
     <div className="cities__places-container container">
@@ -37,11 +46,11 @@ function RentalOffer ({offers, filterName, onChangeSort}: RentalOfferProps): JSX
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">
-          <OfferList offersData={offers}/>
+          <OfferList offersData={offers} onChangeNamePlase={changeNamePlase}/>
         </div>
       </section>
       <div className="cities__right-section">
-        <section className="cities__map map"></section>
+        <Map sizeMap={SIZE_MAP} indexPlase={namePlase} nameSort={nameSort}/>
       </div>
     </div>
   );

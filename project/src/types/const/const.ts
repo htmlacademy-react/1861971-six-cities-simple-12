@@ -17,7 +17,8 @@ export enum NameSpace {
   Offer = 'OFFER',
   OffersNear = 'OFFERS_NEAR',
   Comments = 'COMMENTS',
-  Authorization = 'AUTHORIZATION'
+  Authorization = 'AUTHORIZATION',
+  OfferList = 'OFFER_LIST'
 }
 
 export enum TypeHousing {

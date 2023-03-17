@@ -10,6 +10,7 @@ import HostInformation from '../../pages/host-information/host-information';
 import OfferList from '../../pages/offer-list/offer-list';
 import ReviewsList from '../../pages/reviews-list/reviews-list';
 import FormReview from '../../pages/form-review/form-review';
+import Map from '../../pages/map/map';
 
 type OfferPageProps = {
   dataOffer: Offer;
@@ -19,6 +20,8 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
   const authorizationStatus = useAppSelector(auth);
 
   const {isPremium, title, description, type, bedrooms, maxAdults, rating, price, host, id} = dataOffer;
+
+  const SIZE_MAP = '579px';
 
   return (
     <>
@@ -86,7 +89,7 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map sizeMap={SIZE_MAP} indexPlase={id} offer={dataOffer}/>
         </section>
         <div className="container">
           <section className="near-places places">
