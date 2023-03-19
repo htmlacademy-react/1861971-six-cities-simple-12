@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from '../main-pege/main-page';
+import MainPage from '../main-page/main-page';
 import ErrorPage from '../../pages/error-search-page/error-search-page';
 import LoadOffer from '../../pages/load-offer/load-offer';
 import LoginPage from '../login-page/login-page';

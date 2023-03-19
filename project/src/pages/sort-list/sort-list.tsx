@@ -2,23 +2,35 @@ import { memo } from 'react';
 import {nanoid} from 'nanoid';
 import { SORT_NAME } from '../../types/const/const';
 
-type SetOpenSort = (value: boolean) => void;
 
-type SortListProps = {
-  sortName: string;
-  onSetOpenSort: SetOpenSort;
+type filterType = {
+  cityName: string;
+  sortType: string;
 }
 
-function SortList ({sortName, onSetOpenSort}: SortListProps): JSX.Element {
+type SetFilterStatus = React.Dispatch<React.SetStateAction<{
+  cityName: string;
+  sortType: string;
+}>>
+
+type SortListProps = {
+  sortName: filterType;
+  onChangeNameSort: SetFilterStatus;
+}
+
+function SortList ({sortName, onChangeNameSort}: SortListProps): JSX.Element {
   return (
     <>
       { SORT_NAME.map((sort) =>
         (
-          <li key={nanoid(3)} className={sort === sortName ?
+          <li key={nanoid(3)} className={sort === sortName.sortType ?
             'places__option places__option--active' :
             'places__option'}
           tabIndex={0}
-          onMouseDown={(openSort) => onSetOpenSort(!openSort)}
+          onMouseDown={() => onChangeNameSort({
+            ...sortName,
+            sortType: sort
+          })}
           >
             {sort}
           </li>

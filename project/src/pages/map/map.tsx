@@ -16,9 +16,8 @@ type MapProps = {
 function Map ({sizeMap, indexPlase, nameSort, offer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const offerList: Offers = useAppSelector(dataOffers);
-  //if(offer !== undefined){offerList.map(offer);}
   const map = useMap(mapRef, offerList);
-  useCreatMarker(map, offerList, indexPlase, nameSort);
+  useCreatMarker(map, offerList, indexPlase, nameSort, offer);
 
   return (
     sizeMap === '682px' ?
