@@ -2,19 +2,36 @@ import { memo } from 'react';
 import { nanoid } from 'nanoid';
 import { CITIES_NAME } from '../../types/const/const';
 
-type CitiesListProps = {
+type SetFilterStatus = React.Dispatch<React.SetStateAction<{
   cityName: string;
+  sortType: string;
+}>>
+
+type FilterStatus = {
+  cityName: string;
+  sortType: string;
 }
 
-function CitiesList ({cityName}: CitiesListProps): JSX.Element {
+type CitiesListProps = {
+  cityName: FilterStatus;
+  onSetFilterStatus: SetFilterStatus;
+}
+
+function CitiesList ({cityName, onSetFilterStatus}: CitiesListProps): JSX.Element {
   return (
     <>
       { CITIES_NAME.map((city) =>
         (
           <li key={nanoid(3)} className="locations__item">
-            <a className={city === cityName ?
+            <a className={city === cityName.cityName ?
               'locations__item-link tabs__item tabs__item--active' :
-              'locations__item-link tabs__item'} href='#todo'
+              'locations__item-link tabs__item'}
+            href='#todo'
+            onClick={() => onSetFilterStatus({
+              ...cityName,
+              cityName: city,
+              sortType: 'Popular'
+            })}
             >
               <span>{city}</span>
             </a>

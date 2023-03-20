@@ -14,7 +14,9 @@ function OfferCard ({offer, onChangeNameCity}: OfferCardProps): JSX.Element {
   const offerPath = `${Path.OfferPath}${id}`;
 
   return (
-    <article className="cities__card place-card" onMouseEnter={() => onChangeNameCity(id)}>
+    <article className="cities__card place-card"
+      onMouseEnter={(e) => onChangeNameCity ? onChangeNameCity(id) : e.stopPropagation()}
+    >
       {
         isPremium &&
       <div className="place-card__mark">

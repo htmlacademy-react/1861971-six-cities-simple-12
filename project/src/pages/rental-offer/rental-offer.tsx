@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import OfferList from '../offer-list/offer-list';
 import SortList from '../sort-list/sort-list';
 import Map from '../map/map';
@@ -9,12 +9,15 @@ type filterType = {
   sortType: string;
 }
 
-type changeSort = (evt: MouseEvent) => void;
+type SetFilterStatus = React.Dispatch<React.SetStateAction<{
+  cityName: string;
+  sortType: string;
+}>>
 
 type RentalOfferProps = {
   offers: Offers;
   filterName: filterType;
-  onChangeSort: changeSort;
+  onChangeSort: SetFilterStatus;
   nameSort: string;
 }
 
@@ -41,8 +44,8 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
               <use xlinkHref="#icon-arrow-select"></use>
             </svg>
           </span>
-          <ul className="places__options places__options--custom places__options--opened" onMouseDown={onChangeSort}>
-            {openSort && <SortList sortName={filterName.sortType} onSetOpenSort={setOpenSort}/>}
+          <ul className="places__options places__options--custom places__options--opened">
+            {openSort && <SortList sortName={filterName} onChangeNameSort={onChangeSort}/>}
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">

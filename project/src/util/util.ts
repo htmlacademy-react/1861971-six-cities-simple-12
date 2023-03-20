@@ -118,7 +118,9 @@ export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName
   }
 };
 
-export const createMarker = (offers: Offers, indexPlase: number | undefined): leaflet.Marker[] => {
+export const createMarker = (offers: Offers, indexPlase: number | undefined, place: Offer | undefined): leaflet.Marker[] => {
+
+  let offerList = offers;
 
   const defaultIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -132,7 +134,12 @@ export const createMarker = (offers: Offers, indexPlase: number | undefined): le
     iconAnchor: [20, 40],
   });
 
-  const markers = offers.map((offer) => {
+
+  if(place !== undefined) {
+    offerList = createNewOfferList(offers, place);
+  }
+
+  const markers = offerList.map((offer) => {
     const { location:{latitude, longitude}, id } = offer;
 
     return leaflet
@@ -147,4 +154,11 @@ export const createMarker = (offers: Offers, indexPlase: number | undefined): le
   });
 
   return markers;
+};
+
+const createNewOfferList = (offers: Offers, offer: Offer) => {
+  const newOfferList = offers.map((place) => place);
+  newOfferList.push(offer);
+
+  return newOfferList;
 };

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { AsyncThunk } from '@reduxjs/toolkit';
-import { useState, MouseEvent } from 'react';
-import { useAppSelector } from './../../hooks/use-store/use-store';
+import { useState } from 'react';
+import { useAppSelector } from '../../hooks/use-store/use-store';
 import { fetchOfferList } from '../../store/api-actions/api-actions';
 import { offers } from '../../store/selectors/data-offers/selectors';
 import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
@@ -23,21 +23,6 @@ function MainPage (): JSX.Element {
   });
 
   useRequestServer<FetchOfferList, null>(fetchOfferList);
-
-  const changeCityName = (evt: MouseEvent) => {
-    setFilterStatus({
-      ...filterStatus,
-      cityName: evt.target.textContent,
-      sortType: 'Popular'
-    });
-  };
-
-  const changeSort = (evt: MouseEvent) => {
-    setFilterStatus({
-      ...filterStatus,
-      sortType: evt.target.textContent
-    });
-  };
 
   const offersList = useAppSelector(offers);
 
@@ -65,8 +50,8 @@ function MainPage (): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list" onMouseDown={changeCityName}>
-              <CitiesList cityName={filterStatus.cityName}/>
+            <ul className="locations__list tabs__list">
+              <CitiesList cityName={filterStatus} onSetFilterStatus={setFilterStatus}/>
             </ul>
           </section>
         </div>
@@ -75,7 +60,7 @@ function MainPage (): JSX.Element {
             <RentalOffer
               offers={offerSortFilter}
               filterName={filterStatus}
-              onChangeSort={changeSort}
+              onChangeSort={setFilterStatus}
               nameSort={filterStatus.sortType}
             /> :
             <NoRentalOffers city={filterStatus.cityName}/>}

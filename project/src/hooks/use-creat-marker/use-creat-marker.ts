@@ -2,12 +2,14 @@ import { useEffect, useState, useRef } from 'react';
 import { featureGroup } from 'leaflet';
 import { Map, FeatureGroup } from 'leaflet';
 import { createMarker } from '../../util/util';
-import { Offers } from '../../types/const/const';
+import { Offers, Offer } from '../../types/const/const';
 
 function useCreatMarker (map: Map | null,
   offerList: Offers,
   indexPlase: number | undefined,
-  nameSort: string | undefined) {
+  nameSort: string | undefined,
+  offer: Offer | undefined
+) {
 
   const [ namePlase, setNamePlase ] = useState({
     valuePlase: '',
@@ -37,7 +39,7 @@ function useCreatMarker (map: Map | null,
 
 
     if (place.city.name !== namePlase.valuePlase) {
-      const markers = featureGroup(createMarker(offerList, indexPlase));
+      const markers = featureGroup(createMarker(offerList, indexPlase, offer));
       groupLayer.current = markers;
       groupLayer.current?.addTo(map);
 
@@ -51,7 +53,7 @@ function useCreatMarker (map: Map | null,
     if (place.city.name === namePlase.valuePlase) {
       groupLayer.current?.clearLayers();
       groupLayer.current = null;
-      const markers = featureGroup(createMarker(offerList, indexPlase));
+      const markers = featureGroup(createMarker(offerList, indexPlase, offer));
       groupLayer.current = markers;
       groupLayer.current?.addTo(map);
 
