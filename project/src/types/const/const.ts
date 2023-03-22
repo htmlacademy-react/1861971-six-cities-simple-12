@@ -1,7 +1,7 @@
 export enum Path {
   MainPath = '/',
   LoginPath = '/login',
-  OfferPath = 'offer/',
+  OfferPath = '/offer/',
   ErrorPath = '*'
 }
 
@@ -9,7 +9,8 @@ export enum APIRoute {
   OfferList = '/hotels',
   OfferNear = 'nearby',
   Comments = '/comments',
-  Login = '/login'
+  Login = '/login',
+  Delete = '/logout'
 }
 
 export enum NameSpace {
@@ -40,7 +41,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export const CITIES_NAME: readonly string[] = [
+export const CITIES_NAMES: readonly string[] = [
   'Paris',
   'Cologne',
   'Brussels',

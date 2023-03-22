@@ -15,10 +15,10 @@ type SetFilterStatus = React.Dispatch<React.SetStateAction<{
 
 type SortListProps = {
   sortName: filterType;
-  onChangeNameSort: SetFilterStatus;
+  changeSort: SetFilterStatus;
 }
 
-function SortList ({sortName, onChangeNameSort}: SortListProps): JSX.Element {
+function SortList ({sortName, changeSort}: SortListProps): JSX.Element {
   return (
     <>
       { SORT_NAME.map((sort) =>
@@ -27,7 +27,7 @@ function SortList ({sortName, onChangeNameSort}: SortListProps): JSX.Element {
             'places__option places__option--active' :
             'places__option'}
           tabIndex={0}
-          onMouseDown={() => onChangeNameSort({
+          onMouseDown={() => changeSort({
             ...sortName,
             sortType: sort
           })}

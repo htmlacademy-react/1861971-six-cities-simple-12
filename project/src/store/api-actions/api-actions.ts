@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Dispatch } from '../../types/reducer/reducer';
-import { saveToken } from '../../services/save-token/save-token';
+import { saveToken, dropToken } from '../../services/save-token/save-token';
 import { changeAuthorizationStatus } from '../reducer/get-authorization/get-authorization';
 import { addComments } from '../reducer/get-comments/get-comments';
 import {
@@ -85,5 +85,15 @@ export const postCommentOnServer = createAsyncThunk<void, UserComment, {
   async ({comment, rating, id}, {dispatch, extra: api}) => {
     const {data} = await api.post<Comments>(`${APIRoute.Comments}/${id}`, {comment, rating});
     dispatch(addComments(data));
+  },
+);
+
+export const requestEndUserSession = createAsyncThunk<void, undefined, {
+  extra: AxiosInstance;
+}>(
+  'user/endUserSession',
+  async (_arg, {extra: api}) => {
+    await api.delete(APIRoute.Delete);
+    dropToken();
   },
 );

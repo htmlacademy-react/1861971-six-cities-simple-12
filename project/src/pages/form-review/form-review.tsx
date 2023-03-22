@@ -98,7 +98,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
       <fieldset disabled={form.lockForm}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
-          <Stars onNamberStar={numberStar} numberStar={form.star}/>
+          <Stars onNamberStar={numberStar} number={Number(form.star)}/>
         </div>
         {!validate.validatStar && <p className="reviews__help" style={{color: 'red'}}>Select rating!!!</p>}
         <textarea

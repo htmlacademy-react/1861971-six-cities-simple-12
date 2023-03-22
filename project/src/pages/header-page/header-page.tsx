@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/use-store/use-store';
+import { useAppSelector, useAppDispatch } from '../../hooks/use-store/use-store';
 import { auth, userData } from '../../store/selectors/data-authorization/selectors';
+import { requestEndUserSession } from '../../store/api-actions/api-actions';
 import { Path, AuthorizationStatus } from '../../types/const/const';
 
 function HeaderPage (): JSX.Element {
   const authorizationStatus = useAppSelector(auth);
   const userValue = useAppSelector(userData);
+  const dispatch = useAppDispatch();
+
+  const exitFromClosedPartApplication = () => {
+    dispatch(requestEndUserSession());
+  };
 
   const {Auth, NoAuth} = AuthorizationStatus;
 
@@ -21,9 +27,14 @@ function HeaderPage (): JSX.Element {
             </div>}
           </li>
           <li className="header__nav-item">
-            <a className="header__nav-link" href='#todo'>
-              <span className="header__signout">Sign out</span>
-            </a>
+            <Link className="header__nav-link" to={Path.MainPath}>
+              <span
+                className="header__signout"
+                onClick={exitFromClosedPartApplication}
+              >
+                Sign out
+              </span>
+            </Link>
           </li>
         </>) || (authorizationStatus === NoAuth &&
         <li className="header__nav-item">

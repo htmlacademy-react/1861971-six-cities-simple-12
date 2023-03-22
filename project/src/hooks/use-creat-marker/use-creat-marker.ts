@@ -11,9 +11,9 @@ function useCreatMarker (map: Map | null,
   offer: Offer | undefined
 ) {
 
-  const [ namePlase, setNamePlase ] = useState({
-    valuePlase: '',
-    valueSort: 'Popular'
+  const [ PlaceName, setPlaceName ] = useState({
+    placeValue: '',
+    sortValue: 'Popular'
   });
 
   const groupLayer = useRef<FeatureGroup | null>(null);
@@ -27,30 +27,30 @@ function useCreatMarker (map: Map | null,
     const [ place ] = offerList;
 
 
-    if ((namePlase.valueSort !== nameSort || place.city.name !== namePlase.valuePlase) && nameSort !== undefined) {
+    if ((PlaceName.sortValue !== nameSort || place.city.name !== PlaceName.placeValue) && nameSort !== undefined) {
       groupLayer.current?.clearLayers();
       groupLayer.current = null;
-      if(nameSort) {setNamePlase({
-        ...namePlase,
-        valueSort: nameSort
+      if(nameSort) {setPlaceName({
+        ...PlaceName,
+        sortValue: nameSort
       });
       }
     }
 
 
-    if (place.city.name !== namePlase.valuePlase) {
+    if (place.city.name !== PlaceName.placeValue) {
       const markers = featureGroup(createMarker(offerList, indexPlase, offer));
       groupLayer.current = markers;
       groupLayer.current?.addTo(map);
 
-      setNamePlase({
-        ...namePlase,
-        valuePlase: place.city.name
+      setPlaceName({
+        ...PlaceName,
+        placeValue: place.city.name
       });
     }
 
 
-    if (place.city.name === namePlase.valuePlase) {
+    if (place.city.name === PlaceName.placeValue) {
       groupLayer.current?.clearLayers();
       groupLayer.current = null;
       const markers = featureGroup(createMarker(offerList, indexPlase, offer));
@@ -60,7 +60,7 @@ function useCreatMarker (map: Map | null,
     }
 
 
-  }, [map, offerList, indexPlase, namePlase, nameSort]);
+  }, [map, offerList, indexPlase, PlaceName, nameSort, offer]);
 
 }
 

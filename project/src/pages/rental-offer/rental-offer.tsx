@@ -25,7 +25,7 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
   const [ openSort, setOpenSort ] = useState(false);
   const [ namePlase, setNamePlase ] = useState(0);
 
-  const changeNamePlase = (index: number) => {
+  const changePlaceName = (index: number) => {
     setNamePlase(index);
   };
 
@@ -45,15 +45,15 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
             </svg>
           </span>
           <ul className="places__options places__options--custom places__options--opened">
-            {openSort && <SortList sortName={filterName} onChangeNameSort={onChangeSort}/>}
+            {openSort && <SortList sortName={filterName} changeSort={onChangeSort}/>}
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">
-          <OfferList offersData={offers} onChangeNamePlase={changeNamePlase}/>
+          <OfferList offersData={offers} onChangePlaceName={changePlaceName}/>
         </div>
       </section>
       <div className="cities__right-section">
-        <Map sizeMap={SIZE_MAP} indexPlase={namePlase} nameSort={nameSort}/>
+        <Map sizeMap={SIZE_MAP} indexPlace={namePlase} sortName={nameSort}/>
       </div>
     </div>
   );
