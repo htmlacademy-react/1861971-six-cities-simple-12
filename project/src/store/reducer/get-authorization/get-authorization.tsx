@@ -25,7 +25,8 @@ export const getAuthorization = createSlice({
       .addCase(authorizationOnServer.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.dataUser = action.payload;
-      })
+      });
+    builder
       .addCase(requestEndUserSession.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.dataUser = null;
