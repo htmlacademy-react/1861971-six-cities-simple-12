@@ -6,10 +6,10 @@ type NamberStar = (evt: ChangeEvent<HTMLInputElement>) => void;
 
 type StarsProps = {
   onNamberStar: NamberStar;
-  numberStar: string;
+  number: number;
 }
 
-function Stars ({onNamberStar, numberStar}: StarsProps): JSX.Element {
+function Stars ({onNamberStar, number}: StarsProps): JSX.Element {
   return (
     <>
       {TITLES.map((titil, index) => {
@@ -21,8 +21,8 @@ function Stars ({onNamberStar, numberStar}: StarsProps): JSX.Element {
               onChange={onNamberStar}
             />
             <label htmlFor={id < 2 ? `${id}-star` : `${id}-stars`} className="reviews__rating-label form__rating-label" title={titil}>
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
+              <svg className="form__star-image" width="37" height="33" >
+                <use xlinkHref="#icon-star" fill={number >= id ? '#ff9000' : ''}></use>
               </svg>
             </label>
           </div>

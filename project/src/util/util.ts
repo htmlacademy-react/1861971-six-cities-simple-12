@@ -68,7 +68,7 @@ export const returnTypeHousing = ( typeHousing: string ) => {
   }
 };
 
-export const returnNewOffers = (offersData: Offers | undefined, dataOffersNear: Offers | null): Offers => {
+export const returnNewOffers = (offersData: Offers | undefined, dataOffersNear: Offers | null | undefined): Offers => {
   let newOffers: Offers = [];
 
   if(offersData) {
@@ -120,7 +120,7 @@ export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName
 
 export const createMarker = (offers: Offers, indexPlase: number | undefined, place: Offer | undefined): leaflet.Marker[] => {
 
-  let offerList = offers;
+  let offersList = offers;
 
   const defaultIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -136,10 +136,10 @@ export const createMarker = (offers: Offers, indexPlase: number | undefined, pla
 
 
   if(place !== undefined) {
-    offerList = createNewOfferList(offers, place);
+    offersList = createNewOffersList(offers, place);
   }
 
-  const markers = offerList.map((offer) => {
+  const markers = offersList.map((offer) => {
     const { location:{latitude, longitude}, id } = offer;
 
     return leaflet
@@ -156,9 +156,9 @@ export const createMarker = (offers: Offers, indexPlase: number | undefined, pla
   return markers;
 };
 
-const createNewOfferList = (offers: Offers, offer: Offer) => {
-  const newOfferList = offers.map((place) => place);
-  newOfferList.push(offer);
+const createNewOffersList = (offers: Offers, offer: Offer) => {
+  const newOffersList = offers.map((place) => place);
+  newOffersList.push(offer);
 
-  return newOfferList;
+  return newOffersList;
 };

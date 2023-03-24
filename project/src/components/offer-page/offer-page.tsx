@@ -1,7 +1,12 @@
+import { AxiosInstance } from 'axios';
+import { AsyncThunk } from '@reduxjs/toolkit';
 import { fetchOffersNear } from '../../store/api-actions/api-actions';
 import { auth } from '../../store/selectors/data-authorization/selectors';
+import { offersNear } from '../../store/selectors/data-offers-near/selectors';
 import { useAppSelector } from '../../hooks/use-store/use-store';
-import { Offer, AuthorizationStatus } from '../../types/const/const';
+import { useScrollToTop } from '../../hooks/use-scroll-to-top/use-scroll-to-top';
+import { Offer, AuthorizationStatus, Offers } from '../../types/const/const';
+import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
 import HeaderPage from '../../pages/header-page/header-page';
 import HeaderImage from '../../pages/header-image/header-image';
 import HouseholdThingsList from '../../pages/household-things-list/household-things-list';
@@ -12,12 +17,20 @@ import ReviewsList from '../../pages/reviews-list/reviews-list';
 import FormReview from '../../pages/form-review/form-review';
 import Map from '../../pages/map/map';
 
+type FetchOfferNear = AsyncThunk<Offers, number, {
+  extra: AxiosInstance;
+}>;
+
 type OfferPageProps = {
   dataOffer: Offer;
 }
 
 function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
+  useScrollToTop();
+  useRequestServer<FetchOfferNear | undefined, number>(fetchOffersNear, dataOffer.id);
+
   const authorizationStatus = useAppSelector(auth);
+  const dataOffersNear = useAppSelector(offersNear);
 
   const {isPremium, title, description, type, bedrooms, maxAdults, rating, price, host, id} = dataOffer;
 
@@ -89,13 +102,13 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map sizeMap={SIZE_MAP} indexPlase={id} offer={dataOffer}/>
+          <Map sizeMap={SIZE_MAP} indexPlace={id} offer={dataOffer}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList requestData={fetchOffersNear} hotelId={id}/>
+              <OfferList dataOffersNear={dataOffersNear}/>
             </div>
           </section>
         </div>
