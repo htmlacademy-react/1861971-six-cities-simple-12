@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../use-store/use-store';
 
+
 export function useRequestServer <A,B> (fetch: A, payload?: B) {
   const dispatch = useAppDispatch();
 
