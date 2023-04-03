@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState, ChangeEvent, useCallback, memo } from 'react';
 import { useAppDispatch } from '../../hooks/use-store/use-store';
 import { postCommentOnServer } from '../../store/api-actions/api-actions';
-import { changeValidatStar, changeValidatText } from '../../util/util';
+import { validateStars, validateText } from '../../util/util';
 import { UserComment } from '../../types/const/const';
 import Stars from '../stars/stars';
 
@@ -39,7 +39,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
       ...form,
       star: evt.target.value
     });
-    changeValidatStar<SetValidat, Validate>(setValidat, validate, form.star);
+    validateStars<SetValidat, Validate>(setValidat, validate, form.star);
   }, [form, validate]);
 
 
@@ -48,7 +48,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
       ...form,
       text: evt.target.value
     });
-    changeValidatText<SetValidat, Validate>(setValidat, validate, form.text);
+    validateText<SetValidat, Validate>(setValidat, validate, form.text);
   };
 
 

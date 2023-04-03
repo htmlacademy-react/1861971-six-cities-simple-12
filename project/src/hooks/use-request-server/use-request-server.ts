@@ -2,23 +2,23 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../use-store/use-store';
 
 
-export function useRequestServer <A,B> (fetch: A, payload?: B) {
+export function useRequestServer <A,B> (action: A, payload?: B) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if(!fetch) {
-      return;
+    if(typeof action !== 'function') {
+      throw new Error ('Parameter "action" must be a function');
     }
 
     let isMounted = true;
 
     if(isMounted){
-      dispatch(fetch(payload && payload));
+      dispatch(action(payload && payload));
     }
 
     return () => {
       isMounted = false;
     };
-  },[fetch,dispatch,payload]);
+  },[action,dispatch,payload]);
 
 }

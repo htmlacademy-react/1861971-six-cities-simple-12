@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import { memo } from 'react';
 import { nanoid } from 'nanoid';
-import { CITIES_NAMES } from '../../types/const/const';
+import { CITIES_NAMES, Path } from '../../types/const/const';
 
 type SetFilterStatus = React.Dispatch<React.SetStateAction<{
   cityName: string;
@@ -23,10 +24,10 @@ function CitiesList ({cityName, onSetFilterStatus}: CitiesListProps): JSX.Elemen
       { CITIES_NAMES.map((city) =>
         (
           <li key={nanoid(3)} className="locations__item">
-            <a className={city === cityName.cityName ?
+            <Link className={city === cityName.cityName ?
               'locations__item-link tabs__item tabs__item--active' :
               'locations__item-link tabs__item'}
-            href='#todo'
+            to={Path.MainPath}
             onClick={() => onSetFilterStatus({
               ...cityName,
               cityName: city,
@@ -34,7 +35,7 @@ function CitiesList ({cityName, onSetFilterStatus}: CitiesListProps): JSX.Elemen
             })}
             >
               <span>{city}</span>
-            </a>
+            </Link>
           </li>
         )
       )}

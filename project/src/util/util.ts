@@ -1,31 +1,21 @@
 import leaflet from 'leaflet';
 import { SORT_NAME, Offer, Offers, TypeHousing } from '../types/const/const';
 
+
 export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
   offers.filter(
     (offer: Offer) => offer.city.name === cityName
   );
 
 export const sortOffers = (sortType:string, offers:Offers) => {
-  const [Popular, Tall, Short, Top] = SORT_NAME;
+  const [Popular, lowToHigh, highToLow, topRatedFirst] = SORT_NAME;
   let sortResult: Offers = [];
 
   switch (sortType) {
     case Popular:
       sortResult = offers;
       break;
-    case Short:
-      sortResult = offers.slice ().sort ((a,b) => {
-        if (a.price < b.price) {
-          return -1;
-        }
-        if (a.price > b.price) {
-          return 1;
-        }
-        return 0;
-      });
-      break;
-    case Tall:
+    case highToLow:
       sortResult = offers.slice ().sort ((a,b) => {
         if (a.price < b.price) {
           return -1;
@@ -36,7 +26,18 @@ export const sortOffers = (sortType:string, offers:Offers) => {
         return 0;
       }).reverse();
       break;
-    case Top:
+    case lowToHigh:
+      sortResult = offers.slice ().sort ((a,b) => {
+        if (a.price < b.price) {
+          return -1;
+        }
+        if (a.price > b.price) {
+          return 1;
+        }
+        return 0;
+      });
+      break;
+    case topRatedFirst:
       sortResult = offers.slice ().sort ((a,b) => {
         if (a.rating < b.rating) {
           return -1;
@@ -81,7 +82,11 @@ export const returnNewOffers = (offersData: Offers | undefined, dataOffersNear: 
   return newOffers;
 };
 
-export const changeValidatStar = <A, B>(cb: A, validate: B, valueStar: string) => {
+export const validateStars = <A, B>(cb: A, validate: B, valueStar: string) => {
+  if(typeof cb !== 'function'){
+    throw new Error('Parameter "cb" must be a function');
+  }
+
   if(valueStar.length !== 0) {
     cb({
       ...validate,
@@ -90,7 +95,11 @@ export const changeValidatStar = <A, B>(cb: A, validate: B, valueStar: string) =
   }
 };
 
-export const changeValidatText = <A, B>(cb: A, validate: B, valueText: string) => {
+export const validateText = <A, B>(cb: A, validate: B, valueText: string) => {
+  if(typeof cb !== 'function'){
+    throw new Error('Parameter "cb" must be a function');
+  }
+
   if(valueText.length >= 50 && valueText.length < 300) {
     cb({
       ...validate,
@@ -105,6 +114,10 @@ export const changeValidatText = <A, B>(cb: A, validate: B, valueText: string) =
 };
 
 export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName: string) => {
+  if(typeof cb !== 'function'){
+    throw new Error('Parameter "cb" must be a function');
+  }
+
   if(value.length !== 1 && value.length !== 0) {
     cb({
       ...validate,
