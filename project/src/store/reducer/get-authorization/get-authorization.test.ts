@@ -1,6 +1,9 @@
 import { getAuthorization } from './get-authorization';
 import { changeAuthorizationStatus } from './get-authorization';
-import { authorizationOnServer } from '../../api-actions/api-actions';
+import {
+  authorizationOnServer,
+  requestEndUserSession
+} from '../../api-actions/api-actions';
 import { makeFakeUserData } from './mocks';
 import { AuthorizationStatus } from '../../../types/const/const';
 import { AuthorizationType } from '../../../types/store/store';
@@ -63,6 +66,25 @@ describe('Reducer: user', () => {
             });
         });
     });
+
+  });
+
+  describe('requestEndUserSession test', () => {
+
+    test(
+      `should update authorizationStatus to "NoAuth" if requestEndUserSession fulfilled and
+  get an object with null`,
+
+      () => {
+        expect(getAuthorization.reducer(
+          state, {type: requestEndUserSession.fulfilled.type}
+        ))
+          .toEqual({
+            ...state,
+            authorizationStatus: AuthorizationStatus.NoAuth,
+            dataUser: null
+          });
+      });
 
   });
 });

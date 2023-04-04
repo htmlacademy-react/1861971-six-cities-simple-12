@@ -18,7 +18,6 @@ function useCreatMarker (map: Map | null,
 
   const groupLayer = useRef<FeatureGroup | null>(null);
 
-
   useEffect(() => {
     if(!map || offerList.length === 0) {
       return;
@@ -47,6 +46,7 @@ function useCreatMarker (map: Map | null,
         ...PlaceName,
         placeValue: place.city.name
       });
+
     }
 
 
