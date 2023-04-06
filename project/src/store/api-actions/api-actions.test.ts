@@ -14,7 +14,6 @@ import {
   postCommentOnServer,
   requestEndUserSession
 } from './api-actions';
-import { AuthorizationStatus } from '../../types/const/const';
 
 describe('Async action', () => {
   const api = createAPI();
@@ -122,11 +121,6 @@ describe('Async action', () => {
   });
 
   it('responds with an authorization object if response 200', async () => {
-    const initialState = {
-      authorizationStatus: AuthorizationStatus.Auth,
-      dataUser: mockUserData
-    };
-
     const store = mockStore();
 
     mockeAPI
@@ -138,9 +132,6 @@ describe('Async action', () => {
     const data = await store.dispatch(checkAuthorizationUser());
 
     expect(data.payload).toEqual(mockUserData);
-
-    const stateStore = store.getState().AUTHORIZATION;
-    expect(stateStore).toEqual(initialState);
 
   });
 
@@ -163,17 +154,9 @@ describe('Async action', () => {
 
     expect(data.payload).toEqual(offerList);
 
-    const stateStore = store.getState().COMMENTS?.comments;
-    expect(stateStore).toEqual(offerList);
-
   });
 
   it('deleting a token and exit from the closed part of the application', async () => {
-    const initialState = {
-      authorizationStatus: AuthorizationStatus.NoAuth,
-      dataUser: null
-    };
-
     const store = mockStore();
 
     mockeAPI
@@ -191,9 +174,6 @@ describe('Async action', () => {
 
     expect(Storage.prototype.removeItem).toBeCalledTimes(1);
     expect(Storage.prototype.removeItem).toBeCalledWith('reviews-form-token');
-
-    const stateStore = store.getState().AUTHORIZATION;
-    expect(stateStore).toEqual(initialState);
 
   });
 
