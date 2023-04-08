@@ -5,10 +5,10 @@ import { useAppSelector } from '../../hooks/use-store/use-store';
 import { fetchOfferList } from '../../store/api-actions/api-actions';
 import { offers } from '../../store/selectors/data-offers/selectors';
 import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
-import HeaderPage from '../../pages/header-page/header-page';
-import CitiesList from '../../pages/cities-list/cities-list';
-import RentalOffer from '../../pages/rental-offer/rental-offer';
-import NoRentalOffers from '../../pages/no-rental-offers/no-rental-offers';
+import HeaderPage from '../../components/header-page/header-page';
+import CitiesList from '../../components/cities-list/cities-list';
+import RentalOffer from '../../components/rental-offer/rental-offer';
+import NoRentalOffers from '../../components/no-rental-offers/no-rental-offers';
 import { sortOffersByCity, sortOffers } from '../../util/util';
 import { Offers } from '../../types/const/const';
 

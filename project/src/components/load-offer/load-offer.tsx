@@ -8,7 +8,7 @@ import { fetchOffer } from '../../store/api-actions/api-actions';
 import { returnValueDefault } from '../../store/reducer/get-offer/get-offer';
 import { offer, download } from '../../store/selectors/data-offer/selectors';
 import { Offer, TypeDownload, Path } from '../../types/const/const';
-import OfferPage from '../../components/offer-page/offer-page';
+import OfferPage from '../../pages/offer-page/offer-page';
 
 type FetchOffer = AsyncThunk<Offer, number, {
   extra: AxiosInstance;

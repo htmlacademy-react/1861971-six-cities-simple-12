@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import useMap from '../../hooks/use-map/use-map';
 import { useAppSelector } from '../../hooks/use-store/use-store';
-import useCreatMarker from '../../hooks/use-creat-marker/use-creat-marker';
+import useCreateMarker from '../../hooks/use-create-marker/use-creat-marker';
 import { dataOffers } from '../../store/selectors/data-offer-list/selectors';
 import { Offers, Offer } from '../../types/const/const';
 import 'leaflet/dist/leaflet.css';
@@ -17,7 +17,7 @@ function Map ({sizeMap, indexPlace, sortName, offer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const offerList: Offers = useAppSelector(dataOffers);
   const map = useMap(mapRef, offerList);
-  useCreatMarker(map, offerList, indexPlace, sortName, offer);
+  useCreateMarker(map, offerList, indexPlace, sortName, offer);
 
   return (
     sizeMap === '682px' ?

@@ -5,23 +5,17 @@ import { Offers } from '../../types/const/const';
 
 function useMap(mapRef: MutableRefObject<null | HTMLElement>, offerList: Offers) {
   const [map, setMap] = useState<null | Map>(null);
-  const isRenderedMap = useRef('');
-
+  const isRenderedMap = useRef(false);
 
   useEffect(() => {
-    if(offerList.length === 0) {
+    if(offerList.length === 0){
       return;
     }
 
     const [ place ] = offerList;
-    const { location:{latitude,longitude,zoom}, name } = place.city;
+    const { location:{latitude,longitude,zoom} } = place.city;
 
-    if (isRenderedMap.current !== name && map) {
-      map.remove();
-      setMap(null);
-    }
-
-    if (mapRef.current !== null && isRenderedMap.current !== name) {
+    if (mapRef.current !== null && !isRenderedMap.current) {
 
       const instanceMap = leaflet.map(mapRef.current, {
         center: {
@@ -39,9 +33,12 @@ function useMap(mapRef: MutableRefObject<null | HTMLElement>, offerList: Offers)
           },
         )
         .addTo(instanceMap);
-
       setMap(instanceMap);
-      isRenderedMap.current = name;
+      isRenderedMap.current = true;
+    }
+
+    if(map && offerList.length !== 0) {
+      map.setView(new leaflet.LatLng(latitude, longitude), 12);
     }
   }, [mapRef, offerList, map]);
 
