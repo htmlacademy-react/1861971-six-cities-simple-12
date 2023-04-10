@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import App from './components/app/app';
+import App from './pages/app/app';
 import { store } from './store/store/store';
 import { checkAuthorizationUser } from './store/api-actions/api-actions';
 import { ToastContainer } from 'react-toastify';

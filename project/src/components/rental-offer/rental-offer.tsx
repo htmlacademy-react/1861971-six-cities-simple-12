@@ -31,6 +31,8 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
 
   const SIZE_MAP = '682px';
 
+  const selector = !openSort ? 'places__options places__options--custom' : 'places__options places__options--custom places__options--opened';
+
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
@@ -39,12 +41,12 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
         <form className="places__sorting" action="#" method="get" onMouseDown={() => setOpenSort(!openSort)}>
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
-                Popular
+            {filterName.sortType}
             <svg className="places__sorting-arrow" width="7" height="4">
               <use xlinkHref="#icon-arrow-select"></use>
             </svg>
           </span>
-          <ul className="places__options places__options--custom places__options--opened">
+          <ul className={selector}>
             {openSort && <SortList sortName={filterName} changeSort={onChangeSort}/>}
           </ul>
         </form>

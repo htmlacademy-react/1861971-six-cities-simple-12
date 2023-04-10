@@ -50,12 +50,12 @@ export const CITIES_NAMES: readonly string[] = [
   'Dusseldorf'
 ];
 
-export const SORT_NAME: readonly string[] = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first'
-];
+export enum SortName {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first'
+}
 
 export const TITLES: readonly string[] = [
   'perfect',

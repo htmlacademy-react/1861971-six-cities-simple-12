@@ -1,5 +1,5 @@
 import leaflet from 'leaflet';
-import { SORT_NAME, Offer, Offers, TypeHousing } from '../types/const/const';
+import { SortName, Offer, Offers, TypeHousing } from '../types/const/const';
 
 
 export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
@@ -8,14 +8,13 @@ export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
   );
 
 export const sortOffers = (sortType:string, offers:Offers) => {
-  const [Popular, lowToHigh, highToLow, topRatedFirst] = SORT_NAME;
   let sortResult: Offers = [];
 
   switch (sortType) {
-    case Popular:
+    case SortName.Popular:
       sortResult = offers;
       break;
-    case highToLow:
+    case SortName.HighToLow:
       sortResult = offers.slice ().sort ((a,b) => {
         if (a.price < b.price) {
           return -1;
@@ -26,7 +25,7 @@ export const sortOffers = (sortType:string, offers:Offers) => {
         return 0;
       }).reverse();
       break;
-    case lowToHigh:
+    case SortName.LowToHigh:
       sortResult = offers.slice ().sort ((a,b) => {
         if (a.price < b.price) {
           return -1;
@@ -37,7 +36,7 @@ export const sortOffers = (sortType:string, offers:Offers) => {
         return 0;
       });
       break;
-    case topRatedFirst:
+    case SortName.TopRatedFirst:
       sortResult = offers.slice ().sort ((a,b) => {
         if (a.rating < b.rating) {
           return -1;

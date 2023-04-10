@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/use-store/use-store';
 import { loading } from '../../store/selectors/data-offers-near/selectors';
 import { changeOfferList } from '../../store/reducer/get-offer-list/get-offer-list';
@@ -8,23 +9,28 @@ import OfferCard from './offer-card';
 type ChangePlaceName = (index: number) => void;
 
 type OfferListProps = {
-  offersData?: Offers;
+  offersData?: Offers | undefined;
   dataOffersNear?: Offers | null | undefined;
   onChangePlaceName?: ChangePlaceName;
 }
 
 function OfferList({offersData, dataOffersNear, onChangePlaceName}: OfferListProps): JSX.Element {
-
+  const [hostOfferData, setHostOfferData] = useState <Offers | undefined> (offersData);
   const loadingOffersNear = useAppSelector(loading);
 
   const dispatch = useAppDispatch();
 
-  const newOfferList: Offers = returnNewOffers(offersData, dataOffersNear);
-  dispatch(changeOfferList(newOfferList));
+  useEffect(() => {
+
+    const newOfferList: Offers = returnNewOffers(offersData, dataOffersNear);
+    setHostOfferData(newOfferList);
+    dispatch(changeOfferList(newOfferList));
+
+  },[offersData,dataOffersNear,dispatch]);
 
   return (
     <>
-      {newOfferList.map((list) => (
+      {hostOfferData !== undefined && hostOfferData.map((list) => (
         <OfferCard
           key={list.id.toString()}
           offer={list}
@@ -32,7 +38,7 @@ function OfferList({offersData, dataOffersNear, onChangePlaceName}: OfferListPro
         />
       ))}
       {loadingOffersNear && <b className="cities__status">...Loading offers nearby. Please wait.</b>}
-      {newOfferList.length === 0 && <b className="cities__status">No offers found nearby.</b>}
+      {(hostOfferData === undefined) && <b className="cities__status">No offers found nearby.</b>}
     </>
   );
 }

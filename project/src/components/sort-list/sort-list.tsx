@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import {nanoid} from 'nanoid';
-import { SORT_NAME } from '../../types/const/const';
+import { SortName } from '../../types/const/const';
 
 
 type filterType = {
@@ -21,7 +21,7 @@ type SortListProps = {
 function SortList ({sortName, changeSort}: SortListProps): JSX.Element {
   return (
     <>
-      { SORT_NAME.map((sort) =>
+      { Object.values(SortName).map((sort) =>
         (
           <li key={nanoid(3)} className={sort === sortName.sortType ?
             'places__option places__option--active' :

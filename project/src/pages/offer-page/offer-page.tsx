@@ -7,15 +7,15 @@ import { useAppSelector } from '../../hooks/use-store/use-store';
 import { useScrollToTop } from '../../hooks/use-scroll-to-top/use-scroll-to-top';
 import { Offer, AuthorizationStatus, Offers } from '../../types/const/const';
 import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
-import HeaderPage from '../../pages/header-page/header-page';
-import HeaderImage from '../../pages/header-image/header-image';
-import HouseholdThingsList from '../../pages/household-things-list/household-things-list';
-import PropertyFeatures from '../../pages/property-features/property-features';
-import HostInformation from '../../pages/host-information/host-information';
-import OfferList from '../../pages/offer-list/offer-list';
-import ReviewsList from '../../pages/reviews-list/reviews-list';
-import FormReview from '../../pages/form-review/form-review';
-import Map from '../../pages/map/map';
+import HeaderPage from '../../components/header-page/header-page';
+import HeaderImage from '../../components/header-image/header-image';
+import HouseholdThingsList from '../../components/household-things-list/household-things-list';
+import PropertyFeatures from '../../components/property-features/property-features';
+import HostInformation from '../../components/host-information/host-information';
+import OfferList from '../../components/offer-list/offer-list';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import FormReview from '../../components/form-review/form-review';
+import Map from '../../components/map/map';
 
 type FetchOfferNear = AsyncThunk<Offers, number, {
   extra: AxiosInstance;
