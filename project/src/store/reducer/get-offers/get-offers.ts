@@ -18,8 +18,8 @@ export const getOffers = createSlice({
         state.loading = true;
       })
       .addCase(fetchOfferList.fulfilled, (state, action) => {
-        state.offerList = action.payload;
         state.loading = false;
+        state.offerList = action.payload;
       })
       .addCase(fetchOfferList.rejected, (state) => {
         state.loading = false;

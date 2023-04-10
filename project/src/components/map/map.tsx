@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   sizeMap: string;
   indexPlace?: number;
-  sortName?: string;
+  sortName?: string | undefined;
   offer?: Offer | undefined;
 }
 
@@ -17,7 +17,12 @@ function Map ({sizeMap, indexPlace, sortName, offer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const offerList: Offers = useAppSelector(dataOffers);
   const map = useMap(mapRef, offerList);
-  useCreateMarker(map, offerList, indexPlace, sortName, offer);
+  useCreateMarker(
+    map,
+    offerList,
+    indexPlace, sortName === undefined ? '' : sortName,
+    offer
+  );
 
   return (
     sizeMap === '682px' ?
