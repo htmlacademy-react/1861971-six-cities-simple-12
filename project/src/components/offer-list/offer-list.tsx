@@ -6,15 +6,15 @@ import { returnNewOffers } from '../../util/util';
 import { Offers } from '../../types/const/const';
 import OfferCard from './offer-card';
 
-type ChangePlaceName = (index: number) => void;
+type ChangeIndexOffer = (index: number) => void;
 
 type OfferListProps = {
   offersData?: Offers | undefined;
   dataOffersNear?: Offers | null | undefined;
-  onChangePlaceName?: ChangePlaceName;
+  onGetIndexOffer?: ChangeIndexOffer;
 }
 
-function OfferList({offersData, dataOffersNear, onChangePlaceName}: OfferListProps): JSX.Element {
+function OfferList({offersData, dataOffersNear, onGetIndexOffer}: OfferListProps): JSX.Element {
   const [hostOfferData, setHostOfferData] = useState <Offers | undefined> (offersData);
   const loadingOffersNear = useAppSelector(loading);
 
@@ -34,7 +34,7 @@ function OfferList({offersData, dataOffersNear, onChangePlaceName}: OfferListPro
         <OfferCard
           key={list.id.toString()}
           offer={list}
-          onChangeCityName={onChangePlaceName}
+          onGetIndexOffer={onGetIndexOffer}
         />
       ))}
       {loadingOffersNear && <b className="cities__status">...Loading offers nearby. Please wait.</b>}

@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks/use-store/use-store';
 import { useScrollToTop } from '../../hooks/use-scroll-to-top/use-scroll-to-top';
 import { Offer, AuthorizationStatus, Offers } from '../../types/const/const';
 import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
-import HeaderPage from '../../components/header-page/header-page';
+import HeaderPage from '../../components/header/header';
 import HeaderImage from '../../components/header-image/header-image';
 import HouseholdThingsList from '../../components/household-things-list/household-things-list';
 import PropertyFeatures from '../../components/property-features/property-features';

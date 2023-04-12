@@ -6,14 +6,15 @@ import { Offers, Offer } from '../../types/const/const';
 
 function useCreateMarker (map: Map | null,
   offerList: Offers,
-  indexPlace: number | undefined,
+  indexPlace: number,
   nameSort: string,
   offer: Offer | undefined
 ) {
 
   const [ PlaceName, setPlaceName ] = useState({
     placeValue: '',
-    sortValue: ''
+    sortValue: '',
+    index: 0
   });
 
   const groupLayer = useRef<FeatureGroup | null>(null);
@@ -39,6 +40,17 @@ function useCreateMarker (map: Map | null,
       });
     }
 
+    if(indexPlace !== PlaceName.index) {
+      groupLayer.current?.clearLayers();
+      groupLayer.current = null;
+      const markers = featureGroup(createMarker(offerList, indexPlace, offer));
+      groupLayer.current = markers;
+      groupLayer.current?.addTo(map);
+      setPlaceName({
+        ...PlaceName,
+        index: indexPlace
+      });
+    }
 
   }, [map, offerList, indexPlace, PlaceName, nameSort, offer]);
 
