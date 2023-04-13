@@ -4,7 +4,7 @@ import { Path } from '../../types/const/const';
 import './error.css';
 import './error-message.css';
 
-function ErrorPage (): JSX.Element {
+function ScreenError (): JSX.Element {
   const navigate = useNavigate();
 
   const closeError = () => {
@@ -31,4 +31,4 @@ function ErrorPage (): JSX.Element {
   );
 }
 
-export default ErrorPage;
+export default ScreenError;

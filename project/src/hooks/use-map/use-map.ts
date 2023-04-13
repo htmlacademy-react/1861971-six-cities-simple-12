@@ -15,7 +15,7 @@ function useMap(mapRef: MutableRefObject<null | HTMLElement>, offerList: Offers)
     const [ place ] = offerList;
     const { location:{latitude,longitude,zoom} } = place.city;
 
-    if (mapRef.current !== null && !isRenderedMap.current) {
+    if(mapRef.current !== null && !isRenderedMap.current){
 
       const instanceMap = leaflet.map(mapRef.current, {
         center: {
@@ -37,7 +37,7 @@ function useMap(mapRef: MutableRefObject<null | HTMLElement>, offerList: Offers)
       isRenderedMap.current = true;
     }
 
-    if(map && offerList.length !== 0) {
+    if(map && offerList.length !== 0){
       map.setView(new leaflet.LatLng(latitude, longitude), 12);
     }
   }, [mapRef, offerList, map]);

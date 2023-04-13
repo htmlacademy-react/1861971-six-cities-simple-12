@@ -1,21 +1,22 @@
 import { Link } from 'react-router-dom';
+import { returnTypeHousing } from '../../util/util';
 import { Offer, Path } from '../../types/const/const';
 
-type ChangeCityName = (index: number) => void;
+type ChangeIndexOffer = (index: number) => void;
 
 type OfferCardProps = {
   offer: Offer;
-  onChangeCityName?: ChangeCityName;
+  onGetIndexOffer?: ChangeIndexOffer;
 }
 
-function OfferCard ({offer, onChangeCityName}: OfferCardProps): JSX.Element {
+function OfferCard ({offer, onGetIndexOffer}: OfferCardProps): JSX.Element {
   const {previewImage, title, price, type, isPremium, rating, id} = offer;
 
   const offerPath = `${Path.OfferPath}${id}`;
 
   return (
     <article className="cities__card place-card"
-      onMouseEnter={(e) => onChangeCityName ? onChangeCityName(id) : e.stopPropagation()}
+      onMouseEnter={(e) => onGetIndexOffer ? onGetIndexOffer(id) : e.stopPropagation()}
     >
       {
         isPremium &&
@@ -45,7 +46,7 @@ function OfferCard ({offer, onChangeCityName}: OfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={offerPath}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{returnTypeHousing(type)}</p>
       </div>
     </article>
   );

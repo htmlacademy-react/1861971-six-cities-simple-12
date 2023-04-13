@@ -23,15 +23,15 @@ type RentalOfferProps = {
 
 function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferProps): JSX.Element {
   const [ openSort, setOpenSort ] = useState(false);
-  const [ namePlase, setNamePlase ] = useState(0);
+  const [ indexOffer, setIndexOffer ] = useState(0);
 
-  const changePlaceName = (index: number) => {
-    setNamePlase(index);
+  const changeIndexOffer = (index: number) => {
+    setIndexOffer(index);
   };
 
   const SIZE_MAP = '682px';
 
-  const selector = !openSort ? 'places__options places__options--custom' : 'places__options places__options--custom places__options--opened';
+  const className = !openSort ? 'places__options places__options--custom' : 'places__options places__options--custom places__options--opened';
 
   return (
     <div className="cities__places-container container">
@@ -46,16 +46,16 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
               <use xlinkHref="#icon-arrow-select"></use>
             </svg>
           </span>
-          <ul className={selector}>
+          <ul className={className}>
             {openSort && <SortList sortName={filterName} changeSort={onChangeSort}/>}
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">
-          <OfferList offersData={offers} onChangePlaceName={changePlaceName}/>
+          <OfferList offersData={offers} onGetIndexOffer={changeIndexOffer}/>
         </div>
       </section>
       <div className="cities__right-section">
-        <Map sizeMap={SIZE_MAP} indexPlace={namePlase} sortName={nameSort}/>
+        <Map sizeMap={SIZE_MAP} indexPlace={indexOffer} sortName={nameSort}/>
       </div>
     </div>
   );
