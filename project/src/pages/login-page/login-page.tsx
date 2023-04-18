@@ -1,27 +1,27 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store/use-store';
 import { auth } from '../../store/selectors/data-authorization/selectors';
 import { authorizationOnServer } from '../../store/api-actions/api-actions';
-import { checkValidate } from '../../util/util';
-import { AuthorizationStatus, Path } from '../../types/const/const';
+import { checkValidate, getNameCity } from '../../util/util';
+import { AuthorizationStatus, Path, CITIES_NAMES } from '../../types/const/const';
 
 type SetValidate = React.Dispatch<React.SetStateAction<{
-  email: boolean;
-  password: boolean;
+  isEmail: boolean;
+  isPassword: boolean;
 }>>
 
 type Validate = {
-  email: boolean;
-  password: boolean;
+  isEmail: boolean;
+  isPassword: boolean;
 }
 
 function LoginPage (): JSX.Element {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [validate, setValidate] = useState({
-    email: false,
-    password: false
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ validate, setValidate ] = useState({
+    isEmail: false,
+    isPassword: false
   });
 
   const dispatch = useAppDispatch();
@@ -47,13 +47,16 @@ function LoginPage (): JSX.Element {
 
   const changeEmail = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
-    checkValidate<SetValidate, Validate>(setValidate, validate, email, evt.target.name);
+    checkValidate<SetValidate, Validate>(setValidate, validate, email, 'isEmail');
   };
 
   const changePassword = (evt: ChangeEvent<HTMLInputElement>) => {
     setPassword(evt.target.value);
-    checkValidate<SetValidate, Validate>(setValidate, validate, password, evt.target.name);
+    checkValidate<SetValidate, Validate>(setValidate, validate, password, 'isPassword');
   };
+
+  const getRandomCity = () => getNameCity(CITIES_NAMES);
+  const nameCity = getRandomCity();
 
   return (
     <div className="page page--gray page--login">
@@ -76,26 +79,26 @@ function LoginPage (): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" action="#" method="post" onSubmit={sendRequest}>
               <div className="login__input-wrapper form__input-wrapper">
-                {!validate.email && <p className="reviews__help" style={{color: 'red'}}>Required field !!! Filling example: ivan.v@yandex.ru</p>}
+                {!validate.isEmail && <p className="reviews__help" style={{color: 'red'}}>Required field !!! Filling example: ivan.v@yandex.ru</p>}
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" type="email" name="email" placeholder="Email" required onChange={changeEmail}/>
               </div>
 
               <div className="login__input-wrapper form__input-wrapper">
-                {!validate.password && <p className="reviews__help" style={{color: 'red'}}>Required field !!!</p>}
+                {!validate.isPassword && <p className="reviews__help" style={{color: 'red'}}>Required field !!!</p>}
                 <label className="visually-hidden">Password</label>
                 <input className="login__input form__input" type="password" name="password" placeholder="Password" required onChange={changePassword}/>
               </div>
-              {validate.email && validate.password ?
+              {validate.isEmail && validate.isPassword ?
                 <button className="login__submit form__submit button" type="submit" disabled={false}>Sign in</button> :
                 <button className="login__submit form__submit button" type="submit" disabled>Sign in</button>}
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#todo">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={Path.MainPath} state={{ nameCity: nameCity }}>
+                <span>{nameCity}</span>
+              </Link>
             </div>
           </section>
         </div>

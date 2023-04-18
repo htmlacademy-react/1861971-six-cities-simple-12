@@ -32,7 +32,7 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
   const authorizationStatus = useAppSelector(auth);
   const dataOffersNear = useAppSelector(offersNear);
 
-  const {isPremium, title, description, type, bedrooms, maxAdults, rating, price, host, id} = dataOffer;
+  const { isPremium, title, description, type, bedrooms, maxAdults, rating, price, host, id } = dataOffer;
 
   const SIZE_MAP = '579px';
 
@@ -68,7 +68,7 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
               }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; {title}
+                  {title}
                 </h1>
               </div>
               <div className="property__rating rating">

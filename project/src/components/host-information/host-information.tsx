@@ -10,7 +10,7 @@ type HostInformationProps = {
 };
 
 function HostInformation ({hostData}: HostInformationProps): JSX.Element {
-  const {avatarUrl, name, isPro } = hostData;
+  const { avatarUrl, name, isPro } = hostData;
 
   return (
     <div className="property__host-user user">
@@ -26,7 +26,7 @@ function HostInformation ({hostData}: HostInformationProps): JSX.Element {
         {name}
       </span>
       <span className="property__user-status">
-        {isPro ? 'Pro' : ''}
+        {isPro && 'Pro'}
       </span>
     </div>
   );

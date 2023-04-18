@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import {nanoid} from 'nanoid';
 import { SortName } from '../../types/const/const';
 
 
@@ -15,19 +14,19 @@ type SetFilterStatus = React.Dispatch<React.SetStateAction<{
 
 type SortListProps = {
   sortName: filterType;
-  changeSort: SetFilterStatus;
+  onChangeSort: SetFilterStatus;
 }
 
-function SortList ({sortName, changeSort}: SortListProps): JSX.Element {
+function SortList ({sortName, onChangeSort}: SortListProps): JSX.Element {
   return (
     <>
       { Object.values(SortName).map((sort) =>
         (
-          <li key={nanoid(3)} className={sort === sortName.sortType ?
+          <li key={sort} className={sort === sortName.sortType ?
             'places__option places__option--active' :
             'places__option'}
           tabIndex={0}
-          onMouseDown={() => changeSort({
+          onMouseDown={() => onChangeSort({
             ...sortName,
             sortType: sort
           })}

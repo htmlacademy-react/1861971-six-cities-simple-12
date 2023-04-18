@@ -32,7 +32,7 @@ export enum TypeHousing {
 export enum TypeDownload {
   Fulfilled = 'fulfilled',
   Rejected = 'rejected',
-  Pendin = 'pendin'
+  Pending = 'pending'
 }
 
 export enum AuthorizationStatus {

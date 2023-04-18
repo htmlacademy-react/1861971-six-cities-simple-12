@@ -13,7 +13,7 @@ export const getOffer = createSlice({
   initialState,
   reducers: {
     returnValueDefault : (state) => {
-      state.typeDownload = TypeDownload.Pendin;
+      state.typeDownload = TypeDownload.Pending;
     }
   },
   extraReducers(builder) {

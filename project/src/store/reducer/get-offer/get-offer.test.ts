@@ -55,7 +55,7 @@ describe('Reducer offer', () => {
       expect(getOffer.reducer(secondState, returnValueDefault()))
         .toEqual({
           ...secondState,
-          typeDownload: TypeDownload.Pendin
+          typeDownload: TypeDownload.Pending
         });
     });
   });

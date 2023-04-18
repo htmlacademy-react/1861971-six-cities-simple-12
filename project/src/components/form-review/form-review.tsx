@@ -5,14 +5,14 @@ import { validateStars, validateText } from '../../util/util';
 import { UserComment } from '../../types/const/const';
 import Stars from '../stars/stars';
 
-type SetValidat = React.Dispatch<React.SetStateAction<{
-  validatStar: boolean;
-  validatText: boolean;
+type SetValidate = React.Dispatch<React.SetStateAction<{
+  isValidateStar: boolean;
+  isValidateText: boolean;
 }>>
 
 type Validate = {
-  validatStar: boolean;
-  validatText: boolean;
+  isValidateStar: boolean;
+  isValidateText: boolean;
 }
 
 type FormReviewProps = {
@@ -20,26 +20,26 @@ type FormReviewProps = {
 }
 
 function FormReview ({hotelId}: FormReviewProps): JSX.Element {
-  const [form, setForm] = useState({
+  const [ form, setForm ] = useState({
     star: '',
     text: '',
-    lockForm: false
+    isLockForm: false
   });
 
-  const [ validate, setValidat ] = useState({
-    validatStar: false,
-    validatText: false
+  const [ validate, setValidate ] = useState({
+    isValidateStar: false,
+    isValidateText: false
   });
 
   const dispatch = useAppDispatch();
 
 
-  const numberStar = useCallback ((evt: ChangeEvent<HTMLInputElement>) => {
+  const numberStar = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       star: evt.target.value
     });
-    validateStars<SetValidat, Validate>(setValidat, validate, form.star);
+    validateStars<SetValidate, Validate>(setValidate, validate, evt.target.value);
   }, [form, validate]);
 
 
@@ -48,7 +48,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
       ...form,
       text: evt.target.value
     });
-    validateText<SetValidat, Validate>(setValidat, validate, form.text);
+    validateText<SetValidate, Validate>(setValidate, validate, form.text);
   };
 
 
@@ -59,24 +59,24 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
         ...form,
         star: '',
         text: '',
-        lockForm: false
+        isLockForm: false
       });
 
-      setValidat({
+      setValidate({
         ...validate,
-        validatStar: false,
-        validatText: false
+        isValidateStar: false,
+        isValidateText: false
       });
     } catch (error) {
       setForm({
         ...form,
-        lockForm: false
+        isLockForm: false
       });
     }
   };
 
 
-  const sendReviw = (evt: SyntheticEvent) => {
+  const sendReview = (evt: SyntheticEvent) => {
     evt.preventDefault();
 
     const newComment = {
@@ -87,20 +87,21 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
 
     setForm({
       ...form,
-      lockForm: true
+      isLockForm: true
     });
 
     handleFormSubmit(newComment);
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={sendReviw}>
-      <fieldset disabled={form.lockForm}>
+
+    <form className="reviews__form form" action="#" method="post" onSubmit={sendReview}>
+      <fieldset style={{borderStyle: 'none'}} disabled={form.isLockForm}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           <Stars onNamberStar={numberStar} number={Number(form.star)}/>
         </div>
-        {!validate.validatStar && <p className="reviews__help" style={{color: 'red'}}>Select rating!!!</p>}
+        {!validate.isValidateStar && <p className="reviews__help" style={{color: 'red'}}>Select rating!!!</p>}
         <textarea
           className="reviews__textarea form__textarea"
           id="review" name="review"
@@ -109,17 +110,18 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
           onChange={changeText}
         >
         </textarea>
-        {!validate.validatText && <p className="reviews__help" style={{color: 'red'}}>Number of characters from 50 to 300!!!</p>}
+        {!validate.isValidateText && <p className="reviews__help" style={{color: 'red'}}>Number of characters from 50 to 300!!!</p>}
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          {validate.validatStar && validate.validatText ?
+          {validate.isValidateStar && validate.isValidateText ?
             <button className="reviews__submit form__submit button" type="submit" disabled={false}>Submit</button> :
             <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>}
         </div>
       </fieldset>
     </form>
+
   );
 }
 
