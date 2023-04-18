@@ -15,7 +15,7 @@ type OfferListProps = {
 }
 
 function OfferList({offersData, dataOffersNear, onGetIndexOffer}: OfferListProps): JSX.Element {
-  const [hostOfferData, setHostOfferData] = useState <Offers | undefined> (offersData);
+  const [ hostOfferData, setHostOfferData ] = useState <Offers | undefined> (offersData);
   const loadingOffersNear = useAppSelector(loading);
 
   const dispatch = useAppDispatch();

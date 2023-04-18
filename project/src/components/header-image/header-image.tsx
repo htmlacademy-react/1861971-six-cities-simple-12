@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 type HeaderImageProps = {
   images: string[];
 };
@@ -11,7 +9,7 @@ function HeaderImage ({images}: HeaderImageProps): JSX.Element {
     <div className="property__gallery">
       { imagesList.map((image) =>
         (
-          <div key={nanoid(3)} className="property__image-wrapper">
+          <div key={image} className="property__image-wrapper">
             <img className="property__image" src={image} alt=""/>
           </div>
         )

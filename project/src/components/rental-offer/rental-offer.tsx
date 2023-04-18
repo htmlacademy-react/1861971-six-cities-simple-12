@@ -47,7 +47,7 @@ function RentalOffer ({offers, filterName, onChangeSort, nameSort}: RentalOfferP
             </svg>
           </span>
           <ul className={className}>
-            {openSort && <SortList sortName={filterName} changeSort={onChangeSort}/>}
+            {openSort && <SortList sortName={filterName} onChangeSort={onChangeSort}/>}
           </ul>
         </form>
         <div className="cities__places-list places__list tabs__content">

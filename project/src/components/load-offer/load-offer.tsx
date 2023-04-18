@@ -24,7 +24,7 @@ function LoadOffer (): JSX.Element {
   const typeDowload = useAppSelector(download);
 
   useEffect(() => {
-    if(typeDowload === TypeDownload.Pendin){
+    if(typeDowload === TypeDownload.Pending){
       return;
     }
 

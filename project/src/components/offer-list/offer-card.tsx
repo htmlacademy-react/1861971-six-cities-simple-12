@@ -10,7 +10,7 @@ type OfferCardProps = {
 }
 
 function OfferCard ({offer, onGetIndexOffer}: OfferCardProps): JSX.Element {
-  const {previewImage, title, price, type, isPremium, rating, id} = offer;
+  const { previewImage, title, price, type, isPremium, rating, id } = offer;
 
   const offerPath = `${Path.OfferPath}${id}`;
 
@@ -25,9 +25,9 @@ function OfferCard ({offer, onGetIndexOffer}: OfferCardProps): JSX.Element {
       </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href='#todo'>
+        <Link to={offerPath}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -39,7 +39,7 @@ function OfferCard ({offer, onGetIndexOffer}: OfferCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${Math.ceil(rating)}0%`}}></span>
+            <span style={{width: `${Math.round(rating) * 2}0%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

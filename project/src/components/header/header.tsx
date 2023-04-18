@@ -13,7 +13,7 @@ function Header (): JSX.Element {
     dispatch(requestEndUserSession());
   };
 
-  const {Auth} = AuthorizationStatus;
+  const { Auth } = AuthorizationStatus;
 
   return (
     <ul className="header__nav-list">
@@ -40,7 +40,8 @@ function Header (): JSX.Element {
           </> :
           <li className="header__nav-item">
             <Link className="header__nav-link" to={Path.LoginPath}>
-              <span className="header__signout">Login</span>
+              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+              <span className="header__login">Sign in</span>
             </Link>
           </li>)
       }

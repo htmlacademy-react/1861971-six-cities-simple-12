@@ -1,5 +1,10 @@
 import leaflet from 'leaflet';
-import { SortName, Offer, Offers, TypeHousing } from '../types/const/const';
+import {
+  SortName,
+  Offer,
+  Offers,
+  TypeHousing
+} from '../types/const/const';
 
 
 export const sortOffersByCity = (offers:Offers, cityName:string):Offers =>
@@ -89,7 +94,7 @@ export const validateStars = <A, B>(cb: A, validate: B, valueStar: string) => {
   if(valueStar.length !== 0) {
     cb({
       ...validate,
-      validatStar: true
+      isValidateStar: true
     });
   }
 };
@@ -102,12 +107,12 @@ export const validateText = <A, B>(cb: A, validate: B, valueText: string) => {
   if(valueText.length >= 50 && valueText.length < 300) {
     cb({
       ...validate,
-      validatText: true
+      isValidateText: true
     });
   } else {
     cb({
       ...validate,
-      validatText: false
+      isValidateText: false
     });
   }
 };
@@ -174,3 +179,5 @@ const createNewOffersList = (offers: Offers, offer: Offer) => {
 
   return newOffersList;
 };
+
+export const getNameCity = (items: readonly string[]): string => items[Math.floor(Math.random() * items.length)];
