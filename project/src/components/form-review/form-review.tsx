@@ -43,7 +43,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
   }, [form, validate]);
 
 
-  const changeText = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setForm({
       ...form,
       text: evt.target.value
@@ -76,7 +76,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
   };
 
 
-  const sendReview = (evt: SyntheticEvent) => {
+  const handleReviewSend = (evt: SyntheticEvent) => {
     evt.preventDefault();
 
     const newComment = {
@@ -95,7 +95,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
 
   return (
 
-    <form className="reviews__form form" action="#" method="post" onSubmit={sendReview}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleReviewSend}>
       <fieldset style={{borderStyle: 'none'}} disabled={form.isLockForm}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
@@ -107,7 +107,7 @@ function FormReview ({hotelId}: FormReviewProps): JSX.Element {
           id="review" name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
           value={form.text}
-          onChange={changeText}
+          onChange={handleTextareaChange}
         >
         </textarea>
         {!validate.isValidateText && <p className="reviews__help" style={{color: 'red'}}>Number of characters from 50 to 300!!!</p>}

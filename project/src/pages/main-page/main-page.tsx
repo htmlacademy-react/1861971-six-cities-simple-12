@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { AxiosInstance } from 'axios';
 import { AsyncThunk } from '@reduxjs/toolkit';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector } from '../../hooks/use-store/use-store';
 import { fetchOfferList } from '../../store/api-actions/api-actions';
 import { offers } from '../../store/selectors/data-offers/selectors';
@@ -17,29 +17,36 @@ type FetchOfferList = AsyncThunk<Offers, undefined, {
   extra: AxiosInstance;
 }>;
 
-type nameCity = {
+type NameCity = {
   nameCity: string;
 }
 
 type State = {
-    state: nameCity;
-  };
+  state: NameCity;
+}
 
 
 function MainPage (): JSX.Element {
-  const { state }: State = useLocation();
   const [ filterStatus, setFilterStatus ] = useState({
     cityName: 'Paris',
     sortType: 'Popular',
   });
-  /*
-  if(state !== null && state !== filterStatus.cityName) {
-    setFilterStatus({
-      ...filterStatus,
-      cityName: state
-    });
-  }
-*/
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if(location.state === null) {return;}
+
+    const { state:{nameCity} }: State = location;
+
+    if(nameCity !== filterStatus.cityName){
+      setFilterStatus({
+        ...filterStatus,
+        cityName: nameCity
+      });
+    }
+  },[filterStatus, location]);
+
   useRequestServer<FetchOfferList, null>(fetchOfferList);
 
   const offersList = useAppSelector(offers);
