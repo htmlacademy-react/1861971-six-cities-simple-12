@@ -1,10 +1,10 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store/use-store';
 import { auth } from '../../store/selectors/data-authorization/selectors';
 import { authorizationOnServer } from '../../store/api-actions/api-actions';
-import { checkValidate, getNameCity } from '../../util/util';
-import { AuthorizationStatus, Path, CITIES_NAMES } from '../../types/const/const';
+import { checkValidate } from '../../util/util';
+import { AuthorizationStatus, Path } from '../../types/const/const';
 
 type SetValidate = React.Dispatch<React.SetStateAction<{
   isEmail: boolean;
@@ -16,6 +16,14 @@ type Validate = {
   isPassword: boolean;
 }
 
+type NameCity = {
+  nameCity: string | null;
+}
+
+type State = {
+  state: NameCity;
+}
+
 function LoginPage (): JSX.Element {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -23,6 +31,8 @@ function LoginPage (): JSX.Element {
     isEmail: false,
     isPassword: false
   });
+
+  const { state:{nameCity} }: State = useLocation();
 
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(auth);
@@ -40,23 +50,20 @@ function LoginPage (): JSX.Element {
     };
   });
 
-  const sendRequest = (evt: SyntheticEvent) => {
+  const handleFormSend = (evt: SyntheticEvent) => {
     evt.preventDefault();
     dispatch(authorizationOnServer({email, password}));
   };
 
-  const changeEmail = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleInputEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
     checkValidate<SetValidate, Validate>(setValidate, validate, email, 'isEmail');
   };
 
-  const changePassword = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleInputPasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setPassword(evt.target.value);
     checkValidate<SetValidate, Validate>(setValidate, validate, password, 'isPassword');
   };
-
-  const getRandomCity = () => getNameCity(CITIES_NAMES);
-  const nameCity = getRandomCity();
 
   return (
     <div className="page page--gray page--login">
@@ -77,17 +84,17 @@ function LoginPage (): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post" onSubmit={sendRequest}>
+            <form className="login__form form" action="#" method="post" onSubmit={handleFormSend}>
               <div className="login__input-wrapper form__input-wrapper">
                 {!validate.isEmail && <p className="reviews__help" style={{color: 'red'}}>Required field !!! Filling example: ivan.v@yandex.ru</p>}
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required onChange={changeEmail}/>
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" required onChange={handleInputEmailChange}/>
               </div>
 
               <div className="login__input-wrapper form__input-wrapper">
                 {!validate.isPassword && <p className="reviews__help" style={{color: 'red'}}>Required field !!!</p>}
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required onChange={changePassword}/>
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" required onChange={handleInputPasswordChange}/>
               </div>
               {validate.isEmail && validate.isPassword ?
                 <button className="login__submit form__submit button" type="submit" disabled={false}>Sign in</button> :
@@ -96,7 +103,11 @@ function LoginPage (): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={Path.MainPath} state={{ nameCity: nameCity }}>
+              <Link
+                className="locations__item-link"
+                to={Path.MainPath}
+                state={{nameCity: nameCity}}
+              >
                 <span>{nameCity}</span>
               </Link>
             </div>

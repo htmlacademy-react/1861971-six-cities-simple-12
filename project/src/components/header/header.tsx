@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/use-store/use-store';
 import { auth, userData } from '../../store/selectors/data-authorization/selectors';
 import { requestEndUserSession } from '../../store/api-actions/api-actions';
-import { Path, AuthorizationStatus } from '../../types/const/const';
+import { getNameCity } from '../../util/util';
+import { Path, AuthorizationStatus, CITIES_NAMES } from '../../types/const/const';
 
 function Header (): JSX.Element {
   const authorizationStatus = useAppSelector(auth);
@@ -39,7 +40,11 @@ function Header (): JSX.Element {
             </li>
           </> :
           <li className="header__nav-item">
-            <Link className="header__nav-link" to={Path.LoginPath}>
+            <Link
+              className="header__nav-link"
+              to={Path.LoginPath}
+              state={{nameCity: getNameCity(CITIES_NAMES)}}
+            >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__login">Sign in</span>
             </Link>

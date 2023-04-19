@@ -7,7 +7,7 @@ import './error-message.css';
 function ScreenError (): JSX.Element {
   const navigate = useNavigate();
 
-  const closeError = () => {
+  const handleErrorClose = () => {
     setTimeout(() => navigate(Path.MainPath), 2000);
   };
 
@@ -15,7 +15,7 @@ function ScreenError (): JSX.Element {
     let isMounted = true;
 
     if(isMounted) {
-      closeError();
+      handleErrorClose();
     }
 
     return () => {
