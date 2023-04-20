@@ -17,12 +17,9 @@ type FetchOfferList = AsyncThunk<Offers, undefined, {
   extra: AxiosInstance;
 }>;
 
-type NameCity = {
-  nameCity: string;
-}
-
-type State = {
-  state: NameCity;
+type Location = {
+  state: string | null;
+  key: string;
 }
 
 
@@ -35,14 +32,14 @@ function MainPage (): JSX.Element {
   const location = useLocation();
 
   useEffect(() => {
-    if(location.state === null) {return;}
+    const { state } = location as Location;
 
-    const { state:{nameCity} }: State = location;
+    if(state === null) {return;}
 
-    if(nameCity !== filterStatus.cityName){
+    if(state !== filterStatus.cityName){
       setFilterStatus({
         ...filterStatus,
-        cityName: nameCity
+        cityName: state
       });
     }
   },[filterStatus, location]);

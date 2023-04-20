@@ -43,7 +43,7 @@ function Header (): JSX.Element {
             <Link
               className="header__nav-link"
               to={Path.LoginPath}
-              state={{nameCity: getNameCity(CITIES_NAMES)}}
+              state={getNameCity(CITIES_NAMES)}
             >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__login">Sign in</span>
