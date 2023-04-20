@@ -16,12 +16,9 @@ type Validate = {
   isPassword: boolean;
 }
 
-type NameCity = {
-  nameCity: string | null;
-}
-
-type State = {
-  state: NameCity;
+type Location = {
+  state: string | null;
+  key: string;
 }
 
 function LoginPage (): JSX.Element {
@@ -32,7 +29,7 @@ function LoginPage (): JSX.Element {
     isPassword: false
   });
 
-  const { state:{nameCity} }: State = useLocation();
+  const { state } = useLocation() as Location;
 
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(auth);
@@ -106,9 +103,9 @@ function LoginPage (): JSX.Element {
               <Link
                 className="locations__item-link"
                 to={Path.MainPath}
-                state={{nameCity: nameCity}}
+                state={state}
               >
-                <span>{nameCity}</span>
+                <span>{state}</span>
               </Link>
             </div>
           </section>
