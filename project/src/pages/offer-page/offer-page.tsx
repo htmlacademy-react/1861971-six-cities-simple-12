@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { AxiosInstance } from 'axios';
 import { AsyncThunk } from '@reduxjs/toolkit';
 import { fetchOffersNear } from '../../store/api-actions/api-actions';
@@ -5,7 +6,7 @@ import { auth } from '../../store/selectors/data-authorization/selectors';
 import { offersNear } from '../../store/selectors/data-offers-near/selectors';
 import { useAppSelector } from '../../hooks/use-store/use-store';
 import { useScrollToTop } from '../../hooks/use-scroll-to-top/use-scroll-to-top';
-import { Offer, AuthorizationStatus, Offers } from '../../types/const/const';
+import { Offer, AuthorizationStatus, Offers, Path } from '../../types/const/const';
 import { useRequestServer } from '../../hooks/use-request-server/use-request-server';
 import HeaderPage from '../../components/header/header';
 import HeaderImage from '../../components/header-image/header-image';
@@ -42,9 +43,9 @@ function OfferPage ({dataOffer}: OfferPageProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={Path.MainPath}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <HeaderPage/>
