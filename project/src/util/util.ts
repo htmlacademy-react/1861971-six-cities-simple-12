@@ -3,7 +3,8 @@ import {
   SortName,
   Offer,
   Offers,
-  TypeHousing
+  TypeHousing,
+  REGULAR_EXPRESSION
 } from '../types/const/const';
 
 
@@ -121,8 +122,7 @@ export const checkValidate = <A, B>(cb: A, validate: B, value: string, fieldName
   if(typeof cb !== 'function'){
     throw new Error('Parameter "cb" must be a function');
   }
-
-  if(value.length !== 1 && value.length !== 0) {
+  if((REGULAR_EXPRESSION.test(value) && fieldName === 'isPassword') || (value !== '' && fieldName === 'isEmail')) {
     cb({
       ...validate,
       [fieldName]: true
