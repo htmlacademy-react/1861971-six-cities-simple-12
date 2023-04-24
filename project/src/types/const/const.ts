@@ -1,3 +1,5 @@
+export const REGULAR_EXPRESSION = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
+
 export enum Path {
   MainPath = '/',
   LoginPath = '/login',

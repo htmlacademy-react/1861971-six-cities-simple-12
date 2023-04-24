@@ -58,12 +58,12 @@ function LoginPage (): JSX.Element {
 
   const handleInputEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
-    checkValidate<SetValidate, Validate>(setValidate, validate, email, 'isEmail');
+    checkValidate<SetValidate, Validate>(setValidate, validate, evt.target.value, 'isEmail');
   };
 
   const handleInputPasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setPassword(evt.target.value);
-    checkValidate<SetValidate, Validate>(setValidate, validate, password, 'isPassword');
+    checkValidate<SetValidate, Validate>(setValidate, validate, evt.target.value, 'isPassword');
   };
 
   return (
@@ -93,7 +93,8 @@ function LoginPage (): JSX.Element {
               </div>
 
               <div className="login__input-wrapper form__input-wrapper">
-                {!validate.isPassword && <p className="reviews__help" style={{color: 'red'}}>Required field !!!</p>}
+                {!validate.isPassword &&
+                <><p className="reviews__help" style={{ color: 'red' }}>Password must contain at least one letter and number !!!</p><p className="reviews__help" style={{ color: 'red' }}>Required field !!!</p></>}
                 <label className="visually-hidden">Password</label>
                 <input className="login__input form__input" type="password" name="password" placeholder="Password" required onChange={handleInputPasswordChange}/>
               </div>
