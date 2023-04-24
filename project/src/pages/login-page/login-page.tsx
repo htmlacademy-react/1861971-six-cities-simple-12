@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react';
+import { useState, ChangeEvent, SyntheticEvent, useEffect, KeyboardEvent } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store/use-store';
 import { auth } from '../../store/selectors/data-authorization/selectors';
@@ -52,6 +52,10 @@ function LoginPage (): JSX.Element {
     dispatch(authorizationOnServer({email, password}));
   };
 
+  const handleListenerEventPressKey = (evt: KeyboardEvent) => {
+    if(evt.key === 'Tab') {evt.preventDefault();}
+  };
+
   const handleInputEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
     checkValidate<SetValidate, Validate>(setValidate, validate, email, 'isEmail');
@@ -81,7 +85,7 @@ function LoginPage (): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post" onSubmit={handleFormSend}>
+            <form className="login__form form" action="#" method="post" onSubmit={handleFormSend} onKeyDown={handleListenerEventPressKey}>
               <div className="login__input-wrapper form__input-wrapper">
                 {!validate.isEmail && <p className="reviews__help" style={{color: 'red'}}>Required field !!! Filling example: ivan.v@yandex.ru</p>}
                 <label className="visually-hidden">E-mail</label>
